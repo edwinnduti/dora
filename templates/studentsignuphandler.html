@@ -1,0 +1,113 @@
+{{define "body"}}
+
+<!-- Forms -->
+<div class="container">
+	<div class="d-flex justify-content-center h-80">
+		<div class="card">
+			<div class="card-header">
+                <!-- title of the card -->
+				<h3>Progress Tracker System</h3>
+			</div>
+			<div class="card-body">
+				<form class="form-horizontal" action="/register" method="POST">
+					<fieldset>
+					  <legend><b>Sign Up</b></legend>
+
+                      <!-- Admission Number -->
+					  <div class="form-group">
+						<label for="userid" class="control-label">Adm No.</label>
+						<div class="col-lg-10">
+						  <input type="text" class="form-control" id="userid" name="userid" placeholder="Adm No." required />
+						</div>
+					  </div>
+
+                      <!-- Enter full name -->
+                      <div class="form-group">
+						<label for="fullname" class="control-label">Full Name</label>
+						<div class="col-lg-10">
+						  <input type="text" class="form-control" id="fullname" name="fullname" placeholder="fullname" />
+						</div>
+					  </div>
+
+                      <!-- Email section -->
+                      <div class="form-group">
+						<label for="email" class="control-label">Email</label>
+						<div class="col-lg-10">
+						  <input type="email" class="form-control" id="email" name="email" placeholder="Email" />
+						</div>
+					  </div>
+
+                      <!-- Input Password -->
+					  <div class="form-group">
+						<label for="password" class="control-label">Password</label>
+						<div class="col-lg-10">
+						  <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+						</div>
+					  </div>
+
+					  <!-- Input Password -->
+					  <div class="form-group">
+						<label for="confirmPasswd" class="control-label">Confirm Password</label>
+						<div class="col-lg-10">
+						  <input type="password" class="form-control" id="confirmPasswd" name="confirmPasswd" placeholder="Confirm Password" />
+						</div>
+					  </div>
+
+                      <!-- Choose faculty of study -->
+                      <!-- <div class="form-group">
+						<label for="faculty" class="col-lg-3 control-label">Faculty</label>
+						<div class="col-lg-10">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="facultyComp" name="faculty" value="Faculty of Computing" checked="">
+									Faculty of Computing
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="facultyBuss" name="faculty" value="Faculty of Business">
+									Faculty of Business
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" id="facultyEdu" name="faculty" value="Faculty of Education">
+									Faculty of Education
+                                </label>
+                            </div>
+						</div>
+					  </div> -->
+
+                      <!-- Select course -->
+                      <!-- <div class="form-group">
+						<label for="course" class="control-label">Course</label>
+						<div class="col-lg-10">
+                            <select class="form-control" id="course" name="course">
+                                <option>BBIT</option>
+                                <option>BIT</option>
+                                <option>BCOM</option>
+                                <option>BAC</option>
+                                <option>BSD</option>
+                              </select>
+						</div>
+					  </div> -->
+                      
+					  
+					  <div class="form-group">
+						<div class="col-lg-10 col-lg-offset-2">
+						  <!-- <button type="button" class="btn btn-warning">Sign Up</button> -->
+						  <button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					  </div>
+					</fieldset>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center">
+					I have an account?<a href="/">Sign In</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+{{end}}
