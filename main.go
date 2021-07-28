@@ -20,7 +20,9 @@ import (
 
 	"github.com/edwinnduti/dora/models"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 	"github.com/urfave/negroni"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -29,8 +31,14 @@ import (
 
 // templ
 var (
-	dir   = "assets/"
-	templ = template.Must(template.ParseGlob("templates/*.html"))
+	dir = "assets/"
+)
+
+// set session key
+var (
+	// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
+	key   = []byte(os.Getenv("SECRET_KEY"))
+	store = sessions.NewCookieStore(key)
 )
 
 // match templates
@@ -86,7 +94,7 @@ func Match(passwd, confirmPasswd string) (string, error) {
 
 		return hash, err
 	} else {
-		var err error = fmt.Errorf("Password not matching!")
+		var err error = fmt.Errorf("password not matching")
 		return "", err
 	}
 }
@@ -145,7 +153,7 @@ func PostSaveStudent(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-/* login view */
+/* login page view */
 func WelcomeHandler(w http.ResponseWriter, r *http.Request) {
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -165,6 +173,118 @@ func StudentSignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	//render template
 	RenderTemp(w, "studentsignuphandler", "base", nil)
+}
+
+/* login handler */
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		fmt.Fprintln(w, err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+
+	inCollection := client.Database(database).Collection(collection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// create an empty student struct
+	var student models.Student
+
+	//  allow parsing form
+	r.ParseForm()
+
+	// decode incoming values
+	userid := r.FormValue("userid")
+	passwd := r.FormValue("password")
+
+	// Authentication goes here
+	// find table document
+	err = inCollection.FindOne(ctx, bson.M{"admno": userid}).Decode(&student)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			fmt.Println(fmt.Errorf("no documents error: %v", err))
+			w.WriteHeader(http.StatusOK)
+			//render template
+			RenderTemp(w, "studentsignuphandler", "base", nil)
+
+		} else {
+			w.WriteHeader(http.StatusOK)
+			//render template
+			RenderTemp(w, "studentsignuphandler", "base", nil)
+
+		}
+	}
+
+	// hash password
+	hash, err := HashPassword(passwd)
+	if err != nil {
+		fmt.Fprintln(w, err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// compare hashes
+	if ok := CheckPasswordHash(passwd, hash); !ok {
+		log.Fatalln("Wrong password!")
+		w.WriteHeader(http.StatusOK)
+		//render template
+		RenderTemp(w, "studentsignuphandler", "base", nil)
+	}
+
+	// Set user as authenticated
+	session.Values["authenticated"] = true
+	session.Save(r, w)
+
+	// Redirect to long url
+	http.Redirect(w, r, "/dashboard", http.StatusFound)
+}
+
+/* dashboad view */
+func DashboardHandler(w http.ResponseWriter, r *http.Request) {
+
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Dashboard Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "filldatahandler", "filldatahandler", nil)
+}
+
+/* logout handler */
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Revoke users authentication
+	session.Values["authenticated"] = false
+	session.Save(r, w)
+
+	// Redirect to long url
+	http.Redirect(w, r, "/", http.StatusFound)
 }
 
 /* function render template */
@@ -210,9 +330,12 @@ func main() {
 	// API routes,handlers and methods
 	r.HandleFunc("/", WelcomeHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/signUp", StudentSignUpHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/dashboard", DashboardHandler).Methods("GET", "OPTIONS")
 
 	// route action links
 	r.HandleFunc("/register", PostSaveStudent).Methods("POST", "OPTIONS")
+	r.HandleFunc("/login", LoginHandler).Methods("POST", "OPTIONS")
+	r.HandleFunc("/logout", LogoutHandler).Methods("POST", "OPTIONS")
 
 	// route assets e.g images, css, javascript
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir(dir))))
