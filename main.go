@@ -335,7 +335,7 @@ func main() {
 	// route action links
 	r.HandleFunc("/register", PostSaveStudent).Methods("POST", "OPTIONS")
 	r.HandleFunc("/login", LoginHandler).Methods("POST", "OPTIONS")
-	r.HandleFunc("/logout", LogoutHandler).Methods("POST", "OPTIONS")
+	r.HandleFunc("/logout", LogoutHandler).Methods("GET", "OPTIONS")
 
 	// route assets e.g images, css, javascript
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir(dir))))
