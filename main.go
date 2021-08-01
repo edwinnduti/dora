@@ -51,7 +51,7 @@ func init() {
 	}
 	templates["welcomehandler"] = template.Must(template.ParseFiles("templates/welcomehandler.html", "templates/base.html"))
 	templates["studentsignuphandler"] = template.Must(template.ParseFiles("templates/studentsignuphandler.html", "templates/base.html"))
-	templates["filldatahandler"] = template.Must(template.ParseFiles("templates/filldatahandler.html", "templates/navbar.html", "templates/base.html"))
+	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/navbar.html", "templates/base.html"))
 }
 
 // database and collection names are statically declared
@@ -269,7 +269,7 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "filldatahandler", "filldatahandler", nil)
+	RenderTemp(w, "dashboardhandler", "dashboardhandler", nil)
 }
 
 /* logout handler */
