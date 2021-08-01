@@ -269,7 +269,7 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "dashboardhandler", "dashboardhandler", nil)
+	RenderTemp(w, "dashboardhandler", "base", nil)
 }
 
 /* logout handler */
