@@ -1,0 +1,58 @@
+{{ define "yearofstudyform"}}
+
+<div>
+    <form class="form-horizontal" action="/stage1" method="POST">
+        <fieldset>
+            <h4>STAGE 1 - CHOOSE A COURSE AND THE YEAR OF STUDY</h4>
+            <div>
+                <!-- Select Current Year Of Study -->
+                <div class="form-group">
+                    <label for="yearOfStudy" class="control-label">Current Year Of Study</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="yearOfStudy" name="yearOfStudy">
+                            <option>First Year</option>
+                            <option>Second Year</option>
+                            <option>Third Year</option>
+                            <option>Fourth Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Select Current Course -->
+                <div class="form-group">
+                    <label for="course" class="control-label">Course</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="course" name="course">
+                            <option>BIT</option>
+                            <option>BBIT</option>
+                            <option>BAC</option>
+                            <option>BSD</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <!-- Select Current Semester Of Study -->
+                <div class="form-group">
+                    <label for="semesterOfStudy" class="control-label">Current Semester Of Study</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="semesterOfStudy" name="semesterOfStudy">
+                            <option>First Semester</option>
+                            <option>Second Semester</option>
+                            <option>Third Semester</option>
+                            <option>Fourth Semester</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <!-- next buttons -->
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                      <button type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+{{end}}

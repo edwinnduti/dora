@@ -51,7 +51,11 @@ func init() {
 	}
 	templates["welcomehandler"] = template.Must(template.ParseFiles("templates/welcomehandler.html", "templates/base.html"))
 	templates["studentsignuphandler"] = template.Must(template.ParseFiles("templates/studentsignuphandler.html", "templates/base.html"))
-	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/navbar.html", "templates/base.html"))
+	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/yearofstudyform.html", "templates/navbar.html", "templates/base.html"))
+	templates["unitandlechandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/unitandlecturerform.html", "templates/navbar.html", "templates/base.html"))
+
+	templates["questionpagehandler"] = template.Must(template.ParseFiles("templates/questionpage.html", "templates/base.html"))
+	templates["submitresponsehandler"] = template.Must(template.ParseFiles("templates/submitresponse.html", "templates/base.html"))
 }
 
 // database and collection names are statically declared
@@ -270,6 +274,81 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 
 	//render template
 	RenderTemp(w, "dashboardhandler", "base", nil)
+}
+
+/* unitandlecturer view */
+func UnitAndLecturerHandler(w http.ResponseWriter, r *http.Request) {
+
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "unitandlecturer PAGE Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "unitandlechandler", "base", nil)
+}
+
+/* questionpage view */
+func QuestionsHandler(w http.ResponseWriter, r *http.Request) {
+
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Questions page is Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "questionpagehandler", "base", nil)
+}
+
+/* submitresponse view */
+func SubmitResponseHandler(w http.ResponseWriter, r *http.Request) {
+
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Submit response Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "submitresponsehandler", "base", nil)
 }
 
 /* logout handler */

@@ -1,0 +1,45 @@
+{{ define "unitandlecturerform" }}
+
+<div>
+    <form class="form-horizontal" action="/unitOfStudy" method="POST">
+        <fieldset>
+            <h4>STAGE 2 - CHOOSE A COURSE UNIT AND THE LECTURER</h4>
+            <div>
+                <!-- Select Unit -->
+                <div class="form-group">
+                    <label for="unitOfStudy" class="control-label">Unit Of Study</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="unitOfStudy" name="unitOfStudy">
+                            <option>Communication Skills</option>
+                            <option>Data Mining</option>
+                            <option>Network Programming</option>
+                            <option>Introduction to C</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <!-- Select Current Semester Of Study -->
+                <div class="form-group">
+                    <label for="lecturer" class="control-label">Lecturer</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="lecturer" name="lecturer">
+                            <option>Dr. Lucy Kamene</option>
+                            <option>Kimani John</option>
+                            <option>Martin Kibe</option>
+                            <option>Stephen Owuor</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <!-- next buttons -->
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                      <button type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+{{end}}
