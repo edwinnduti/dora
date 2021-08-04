@@ -59,7 +59,12 @@ func init() {
 }
 
 // database and collection names are statically declared
-const database, collection = "lecture-progress", "studentDetails"
+const (
+	database            = "lecture-progress"
+	studentCollection   = "studentDetails"
+	detailsCollection   = "details"
+	questionsCollection = "questions"
+)
 
 // create connection to mongodb
 func CreateConnection() (*mongo.Client, error) {
@@ -110,7 +115,7 @@ func PostSaveStudent(w http.ResponseWriter, r *http.Request) {
 	client, err := CreateConnection()
 	Check(err)
 
-	c := client.Database(database).Collection(collection)
+	c := client.Database(database).Collection(studentCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -193,7 +198,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	client, err := CreateConnection()
 	Check(err)
 
-	inCollection := client.Database(database).Collection(collection)
+	inCollection := client.Database(database).Collection(studentCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -268,13 +273,22 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get id
+	vars := mux.Vars(r)
+	objId := vars["userid"]
+
+	// student struct with id and issue url id to student.ID
+	studentID := models.IdDetail{
+		ID: objId,
+	}
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "dashboardhandler", "base", nil)
+	RenderTemp(w, "dashboardhandler", "base", studentID)
 }
 
 /* get year and course */
@@ -304,7 +318,7 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 	client, err := CreateConnection()
 	Check(err)
 
-	inCollection := client.Database(database).Collection(collection)
+	inCollection := client.Database(database).Collection(studentCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -353,13 +367,22 @@ func UnitAndLecturerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get id
+	vars := mux.Vars(r)
+	objId := vars["userid"]
+
+	// student struct with id and issue url id to student.ID
+	studentID := models.IdDetail{
+		ID: objId,
+	}
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "unitandlechandler", "base", nil)
+	RenderTemp(w, "unitandlechandler", "base", studentID)
 }
 
 /* get-unit-and-lec */
@@ -389,7 +412,7 @@ func GetUnitAndLec(w http.ResponseWriter, r *http.Request) {
 	client, err := CreateConnection()
 	Check(err)
 
-	inCollection := client.Database(database).Collection(collection)
+	inCollection := client.Database(database).Collection(detailsCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -445,13 +468,22 @@ func QuestionsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get id
+	vars := mux.Vars(r)
+	objId := vars["userid"]
+
+	// student struct with id and issue url id to student.ID
+	studentID := models.IdDetail{
+		ID: objId,
+	}
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "questionpagehandler", "base", nil)
+	RenderTemp(w, "questionpagehandler", "base", studentID)
 }
 
 /* evaluate answers */
@@ -481,7 +513,7 @@ func GetEvaluationAnswers(w http.ResponseWriter, r *http.Request) {
 	client, err := CreateConnection()
 	Check(err)
 
-	inCollection := client.Database(database).Collection(collection)
+	inCollection := client.Database(database).Collection(questionsCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -559,13 +591,22 @@ func SubmitResponseHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get id
+	vars := mux.Vars(r)
+	objId := vars["userid"]
+
+	// student struct with id and issue url id to student.ID
+	studentID := models.IdDetail{
+		ID: objId,
+	}
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "submitresponsehandler", "base", nil)
+	RenderTemp(w, "submitresponsehandler", "base", studentID)
 }
 
 /* logout handler */

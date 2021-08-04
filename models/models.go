@@ -83,3 +83,8 @@ type Config struct {
 	Passwd     string
 	Key        string
 }
+
+// pass student with string id
+type IdDetail struct {
+	ID string `json:"ID"`
+}
