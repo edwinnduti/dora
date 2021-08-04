@@ -16,7 +16,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/edwinnduti/dora/models"
@@ -52,7 +51,7 @@ func init() {
 	}
 	templates["welcomehandler"] = template.Must(template.ParseFiles("templates/welcomehandler.html", "templates/base.html"))
 	templates["studentsignuphandler"] = template.Must(template.ParseFiles("templates/studentsignuphandler.html", "templates/base.html"))
-	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/yearofstudyform.html", "templates/navbar.html", "templates/base.html"))
+	templates["yearofstudyhandler"] = template.Must(template.ParseFiles("templates/yearofstudyform.html", "templates/navbar.html", "templates/base.html"))
 	templates["unitandlechandler"] = template.Must(template.ParseFiles("templates/unitandlecturerform.html", "templates/navbar.html", "templates/base.html"))
 
 	templates["questionpagehandler"] = template.Must(template.ParseFiles("templates/questionspage.html", "templates/base.html"))
@@ -256,12 +255,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Redirect to long url
 	// id := Between(student.ID.Hex(), "ObjectID(\"", "\")")
 	log.Println(student.ID.Hex())
-	uri := fmt.Sprintf("/dashboard/%v", student.ID.Hex())
+	uri := fmt.Sprintf("/year-of-study/%v", student.ID.Hex())
 	http.Redirect(w, r, uri, http.StatusFound)
 }
 
-/* dashboad view */
-func DashboardHandler(w http.ResponseWriter, r *http.Request) {
+/* yearofstudyhandler view */
+func YearofstudyhandlerHandler(w http.ResponseWriter, r *http.Request) {
 
 	// instance of sessions
 	session, err := store.Get(r, "cookie-name")
@@ -271,7 +270,7 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Check if user is authenticated
 	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
-		fmt.Fprint(w, "Dashboard Forbidden!")
+		fmt.Fprint(w, "Year of study Forbidden!")
 		http.Error(w, "Forbidden", http.StatusForbidden)
 		return
 	}
@@ -291,7 +290,7 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "dashboardhandler", "base", studentID)
+	RenderTemp(w, "yearofstudyhandler", "base", studentID)
 }
 
 /* get year and course */
@@ -333,6 +332,7 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 	// decode incoming values
 	yearOfStudy := r.FormValue("yearOfStudy")
 	course := r.FormValue("course")
+	semester := r.FormValue("currentSemester")
 
 	// find table document
 	filter := bson.M{"_id": userid}
@@ -341,6 +341,7 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 	update := bson.D{
 		{Key: "$set", Value: bson.M{"yearOfStudy": yearOfStudy}},
 		{Key: "$set", Value: bson.M{"course": course}},
+		{Key: "$set", Value: bson.M{"currentSemester": semester}},
 	}
 	_, err = inCollection.UpdateOne(ctx, filter, update)
 	Check(err)
@@ -654,24 +655,6 @@ func Checkf(line string, err error) {
 	}
 }
 
-// check whats between
-func Between(value string, a string, b string) string {
-	// Get substring between two strings.
-	posFirst := strings.Index(value, a)
-	if posFirst == -1 {
-		return ""
-	}
-	posLast := strings.Index(value, b)
-	if posLast == -1 {
-		return ""
-	}
-	posFirstAdjusted := posFirst + len(a)
-	if posFirstAdjusted >= posLast {
-		return ""
-	}
-	return value[posFirstAdjusted:posLast]
-}
-
 // Main function
 func main() {
 	/*
@@ -688,7 +671,7 @@ func main() {
 	// API routes,handlers and methods
 	r.HandleFunc("/", WelcomeHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/signUp", StudentSignUpHandler).Methods("GET", "OPTIONS")
-	r.HandleFunc("/dashboard/{userid}", DashboardHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/year-of-study/{userid}", YearofstudyhandlerHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/unit-and-lecture/{userid}", UnitAndLecturerHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/questions/{userid}", QuestionsHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/thank-you-response/{userid}", SubmitResponseHandler).Methods("GET", "OPTIONS")

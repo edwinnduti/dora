@@ -1,4 +1,21 @@
-{{ define "yearofstudyform"}}
+{{ define "body"}}
+
+{{ template "navigationbar" }}
+
+<h1>Welcome to the Student Online Portal</h1>
+<div>
+    <p>The University seeks to improve the quality o teaching in all its teaching units.To reach this goal,
+        the institution has come up with a questionnaire to obtain feedback from various students on various areas.The 
+    questionnaire should filled honestly as we anticipated that the feedback on lecturers will be used to improve teaching
+    ,student course selection, learning content and make appropriate management decision. <p class="text-danger">KINDLY NOTE: INFORMATION 
+        PROVIDED WILL BE TREATED WITH UTMOST CONFIDENTIALITYAND WILL BE SOLELY USED FOR IMPROVING QUALITY TEACHING.
+    </p>    
+</p>
+<p class="center">
+    This is an Evaluation Exercise for 2021/2022 | TERM2
+</p>
+</div>
+
 
 <div>
     <form class="form-horizontal" action="/get-year-and-course/{{.ID}}" method="POST">
@@ -33,9 +50,9 @@
         
                 <!-- Select Current Semester Of Study -->
                 <div class="form-group">
-                    <label for="semesterOfStudy" class="control-label">Current Semester Of Study</label>
+                    <label for="currentSemester" class="control-label">Current Semester Of Study</label>
                     <div class="col-lg-10">
-                        <select class="form-control" id="semesterOfStudy" name="semesterOfStudy">
+                        <select class="form-control" id="currentSemester" name="currentSemester">
                             <option>First Semester</option>
                             <option>Second Semester</option>
                             <option>Third Semester</option>

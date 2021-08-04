@@ -13,6 +13,7 @@ type Student struct {
 	Password    string             `json:"studentPassword"`
 	YearOfStudy string             `json:"yearOfStudy"`
 	Course      string             `json:"course"`
+	Semester    string             `json:"currentSemester"`
 }
 
 type Details struct {
