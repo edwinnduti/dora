@@ -1,34 +1,67 @@
 {{ define "body" }}
 
-<div class="container-fluid">
-    <form class="form-horizontal" action="/answers" method="POST" >
+<div class="container">
+    <form class="form-horizontal" action="/get-evaluation-answers/{userid}" method="POST" >
         <fieldset>
             <!-- Course Unit Objectives -->
             <div>
-                <!-- courseUnitObjective1 -->
+                <!-- clarityOfCourseUnitObjective1 -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
+                    <label for="clarityOfCourseUnitObjective" class="col-lg-3 control-label">
                         <h4>1. Clarity of the Course Unit Objective</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="clarityOfCourseUnitObjective" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="clarityOfCourseUnitObjective" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="clarityOfCourseUnitObjective" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="clarityOfCourseUnitObjective" value="Very Good">Very Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="excellent" name="clarityOfCourseUnitObjective" value="Excellent">Excellent
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- achievementOfCourseUnitObjective2 -->
+                <div class="form-group">
+                    <label for="achievementOfCourseUnitObjective" class="col-lg-3 control-label">
+                        <h4>2. Achievement of the Course Unit Objective</h4>
+                    </label>
+                    <div class="col-lg-10">
+                        <div class="radio form-check form-check-inline">
+                            <label>
+                                <input type="radio" id="poor" name="achievementOfCourseUnitObjective" value="Poor">Poor
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="fair" name="achievementOfCourseUnitObjective" value="Fair">Fair
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="good" name="achievementOfCourseUnitObjective" value="Good">Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="veryGood" name="achievementOfCourseUnitObjective" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
@@ -38,68 +71,35 @@
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective2 -->
+                <!-- valuableCourseOutline3 -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="valuableCourseOutline" class="col-lg-3 control-label">
+                        <h4>3. Valuable course outline at the beginning of the semester/term</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="valuableCourseOutline" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="valuableCourseOutline" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="valuableCourseOutline" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="valuableCourseOutline" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <!-- courseUnitObjective3 -->
-                <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
-                    </label>
-                    <div class="col-lg-10">
-                        <div class="radio form-check form-check-inline">
-                            <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="valuableCourseOutline" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
@@ -108,101 +108,101 @@
     
             <!-- Course Content and Methodology -->
             <div>
-                <!-- courseUnitObjective1 -->
+                <!-- interpretationOfConcepts -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="interpretationOfConcepts" class="col-lg-3 control-label">
+                        <h4>4. Interpretation of concepts and course concepts</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="interpretationOfConcepts" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="interpretationOfConcepts" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="interpretationOfConcepts" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="interpretationOfConcepts" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="interpretationOfConcepts" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective2 -->
+                <!-- extentOfCoverage -->
                 <div class="form-group">
                     <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                        <h4>5. Extent of coverage of course syllabus</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="extentOfCoverage" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="extentOfCoverage" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="extentOfCoverage" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="extentOfCoverage" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="extentOfCoverage" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective3 -->
+                <!-- clarityOfPresentation -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="clarityOfPresentation" class="col-lg-3 control-label">
+                        <h4>6. Clarity of Presentation</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="clarityOfPresentation" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="clarityOfPresentation" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="clarityOfPresentation" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="clarityOfPresentation" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="clarityOfPresentation" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
@@ -211,204 +211,273 @@
     
             <!-- Course Material and Level of Preparation of Lecturer  -->
             <div>
-                <!-- courseMaterial1 -->
+                <!-- sufficiencyOfHandouts -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="sufficiencyOfHandouts" class="col-lg-3 control-label">
+                        <h4>7. Sufficiency of Handouts</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="sufficiencyOfHandouts" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="sufficiencyOfHandouts" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="sufficiencyOfHandouts" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="sufficiencyOfHandouts" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="sufficiencyOfHandouts" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective2 -->
+                <!-- guidanceOnUse -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="guidanceOnUse" class="col-lg-3 control-label">
+                        <h4>8. Guidance on the use of web-based Materials/Journals</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="guidanceOnUse" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="guidanceOnUse" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="guidanceOnUse" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="guidanceOnUse" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="guidanceOnUse" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective3 -->
+                <!-- adequancyOfReadings -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="adequancyOfReadings" class="col-lg-3 control-label">
+                        <h4>9. Adequancy of recommended readings for the course unit</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="adequancyOfReadings" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="adequancyOfReadings" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="adequancyOfReadings" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="adequancyOfReadings" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="adequancyOfReadings" value="Excellent">Excellent
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- exhibitsHighLevel -->
+                <div class="form-group">
+                    <label for="exhibitsHighLevel" class="col-lg-3 control-label">
+                        <h4>10. Exhibits High level of preparedness for each lesson</h4>
+                    </label>
+                    <div class="col-lg-10">
+                        <div class="radio form-check form-check-inline">
+                            <label>
+                                <input type="radio" id="poor" name="exhibitsHighLevel" value="Poor">Poor
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="fair" name="exhibitsHighLevel" value="Fair">Fair
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="good" name="exhibitsHighLevel" value="Good">Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="veryGood" name="exhibitsHighLevel" value="Very Good">Very Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="excellent" name="exhibitsHighLevel" value="Excellent">Excellent
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- organizedNotes -->
+                <div class="form-group">
+                    <label for="organizedNotes" class="col-lg-3 control-label">
+                        <h4>11. Uses organized up-to-dates notes and course materials</h4>
+                    </label>
+                    <div class="col-lg-10">
+                        <div class="radio form-check form-check-inline">
+                            <label>
+                                <input type="radio" id="poor" name="organizedNotes" value="Poor">Poor
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="fair" name="organizedNotes" value="Fair">Fair
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="good" name="organizedNotes" value="Good">Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="veryGood" name="organizedNotes" value="Very Good">Very Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="excellent" name="organizedNotes" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-    
+
             <!-- Course Unit Evaluation -->
             <div>
-                <!-- courseUnitObjective1 -->
+                <!-- relevantAssignment -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="relevantAssignment" class="col-lg-3 control-label">
+                        <h4>12. Gives relevant and challenging  assignments and CATs</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="relevantAssignment" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="relevantAssignment" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="relevantAssignment" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="relevantAssignment" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="relevantAssignment" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective2 -->
+
+                <!-- makesAssignments -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="makesAssignments" class="col-lg-3 control-label">
+                        <h4>13. Makes assignments and CATs promptly</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="makesAssignments" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="makesAssignments" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="makesAssignments" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="makesAssignments" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="makesAssignments" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective3 -->
+
+                <!-- givesFeedback -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="givesFeedback" class="col-lg-3 control-label">
+                        <h4>14. Gives helpful feedback on assignments and CATs</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="givesFeedback" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="givesFeedback" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="givesFeedback" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="givesFeedback" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="givesFeedback" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
@@ -417,101 +486,167 @@
     
             <!-- Availability of the Lecturer -->
             <div>
-                <!-- courseUnitObjective1 -->
+                <!-- attendsToLessons -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="attendsToLessons" class="col-lg-3 control-label">
+                        <h4>15. Attends to lessons regularly and makes up for missed lessons</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="attendsToLessons" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="attendsToLessons" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="attendsToLessons" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="attendsToLessons" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="attendsToLessons" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective2 -->
+                <!-- keepsTimetable -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="keepsTimetable" class="col-lg-3 control-label">
+                        <h4>16. Keeps to the approved and published timetable</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="keepsTimetable" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="keepsTimetable" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="keepsTimetable" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="keepsTimetable" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="keepsTimetable" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective3 -->
+                <!-- punctual -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="punctual" class="col-lg-3 control-label">
+                        <h4>17. Always punctual for classes</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="punctual" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="punctual" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="punctual" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="punctual" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="punctual" value="Excellent">Excellent
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- teachesFullSession -->
+                <div class="form-group">
+                    <label for="teachesFullSession" class="col-lg-3 control-label">
+                        <h4>18. Always teaches for the full session</h4>
+                    </label>
+                    <div class="col-lg-10">
+                        <div class="radio form-check form-check-inline">
+                            <label>
+                                <input type="radio" id="poor" name="teachesFullSession" value="Poor">Poor
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="fair" name="teachesFullSession" value="Fair">Fair
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="good" name="teachesFullSession" value="Good">Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="veryGood" name="teachesFullSession" value="Very Good">Very Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="excellent" name="teachesFullSession" value="Excellent">Excellent
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- useOfClassTime -->
+                <div class="form-group">
+                    <label for="useOfClassTime" class="col-lg-3 control-label">
+                        <h4>19. Makes effective use of class time</h4>
+                    </label>
+                    <div class="col-lg-10">
+                        <div class="radio form-check form-check-inline">
+                            <label>
+                                <input type="radio" id="poor" name="useOfClassTime" value="Poor">Poor
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="fair" name="useOfClassTime" value="Fair">Fair
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="good" name="useOfClassTime" value="Good">Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="veryGood" name="useOfClassTime" value="Very Good">Very Good
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" id="excellent" name="useOfClassTime" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
@@ -520,101 +655,101 @@
     
             <!-- Course Delivery -->
             <div>
-                <!-- courseUnitObjective1 -->
+                <!-- presentCourseConcepts -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="presentCourseConcepts" class="col-lg-3 control-label">
+                        <h4>20. Presents course concepts and theories in an interesting way</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="presentCourseConcepts" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="presentCourseConcepts" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="presentCourseConcepts" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="presentCourseConcepts" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="presentCourseConcepts" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective2 -->
+                <!-- presentCourseConceptsClearly -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="presentCourseConceptsClearly" class="col-lg-3 control-label">
+                        <h4>21. Presents course concepts and theories in an interesting way</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="presentCourseConceptsClearly" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="presentCourseConceptsClearly" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="presentCourseConceptsClearly" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="presentCourseConceptsClearly" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="presentCourseConceptsClearly" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>
                 </div>
-                <!-- courseUnitObjective3 -->
+                <!-- facilitatesClassParticipation -->
                 <div class="form-group">
-                    <label for="courseUnitObjective" class="col-lg-3 control-label">
-                        <h4>1. Clarity of the Course Unit Objective</h4>
+                    <label for="facilitatesClassParticipation" class="col-lg-3 control-label">
+                        <h4>22. Facilitates meaninigful and active class participation by students</h4>
                     </label>
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="courseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="facilitatesClassParticipation" value="Poor">Poor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="fair" name="courseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="facilitatesClassParticipation" value="Fair">Fair
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="good" name="courseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="facilitatesClassParticipation" value="Good">Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="veryGood" name="courseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="facilitatesClassParticipation" value="Very Good">Very Good
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="facilitatesClassParticipation" value="Excellent">Excellent
                             </label>
                         </div>
                     </div>

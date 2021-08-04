@@ -6,11 +6,46 @@ import (
 
 // student info
 type Student struct {
-	ID       primitive.ObjectID `bson:"_id" json:"studentID"`
-	AdmNo    string             `json:"admNo"`
-	FullName string             `json:"studentFullname"`
-	Email    string             `json:"studentEmail"`
-	Password string             `json:"studentPassword"`
+	ID          primitive.ObjectID `bson:"_id" json:"studentID"`
+	AdmNo       string             `json:"admNo"`
+	FullName    string             `json:"studentFullname"`
+	Email       string             `json:"studentEmail"`
+	Password    string             `json:"studentPassword"`
+	YearOfStudy string             `json:"yearOfStudy"`
+	Course      string             `json:"course"`
+}
+
+type Details struct {
+	DetailsID primitive.ObjectID `bson:"_id" json:"detailsID"`
+	Unit      string             `json:"unit"`
+	Lecturer  string             `json:"lecturer"`
+}
+
+// questions
+type Questions struct {
+	QuestionsID                        primitive.ObjectID `bson:"_id" json:"questionsID"`
+	ClarityOfCourseUnitObjective       string             `json:"clarityOfCourseUnitObjective"`
+	AchievementOfCourseUnitObjective   string             `json:"achievementOfCourseUnitObjective"`
+	ValuableCourseOutline              string             `json:"valuableCourseOutline"`
+	InterpretationOfConcepts           string             `json:"interpretationOfConcepts"`
+	ExtentOfCoverage                   string             `json:"extentOfCoverage"`
+	ClarityOfPresentation              string             `json:"clarityOfPresentation"`
+	SufficiencyOfHandouts              string             `json:"sufficiencyOfHandouts"`
+	GuidanceOnUse                      string             `json:"guidanceOnUse"`
+	AdequancyOfReadings                string             `json:"adequancyOfReadings"`
+	ExhibitsHighLevel                  string             `json:"exhibitsHighLevel"`
+	OrganizedNotes                     string             `json:"organizedNotes"`
+	RelevantAssignment                 string             `json:"relevantAssignment"`
+	MakesAssignments                   string             `json:"makesAssignments"`
+	GivesFeedback                      string             `json:"givesFeedback"`
+	AttendsToLessons                   string             `json:"attendsToLessons"`
+	KeepsTimetable                     string             `json:"keepsTimetable"`
+	Punctual                           string             `json:"punctual"`
+	TeachesFullSession                 string             `json:"teachesFullSession"`
+	UseOfClassTime                     string             `json:"useOfClassTime"`
+	PresentCourseConceptsInterestingly string             `json:"presentCourseConceptsInterestingly"`
+	PresentCourseConceptsClearly       string             `json:"presentCourseConceptsClearly"`
+	FacilitatesClassParticipation      string             `json:"facilitatesClassParticipation"`
 }
 
 // course details
