@@ -54,7 +54,7 @@ func init() {
 	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/yearofstudyform.html", "templates/navbar.html", "templates/base.html"))
 	templates["unitandlechandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/unitandlecturerform.html", "templates/navbar.html", "templates/base.html"))
 
-	templates["questionpagehandler"] = template.Must(template.ParseFiles("templates/questionpage.html", "templates/base.html"))
+	templates["questionpagehandler"] = template.Must(template.ParseFiles("templates/questionspage.html", "templates/base.html"))
 	templates["submitresponsehandler"] = template.Must(template.ParseFiles("templates/submitresponse.html", "templates/base.html"))
 }
 
