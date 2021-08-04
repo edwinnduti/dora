@@ -16,6 +16,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/edwinnduti/dora/models"
@@ -52,7 +53,7 @@ func init() {
 	templates["welcomehandler"] = template.Must(template.ParseFiles("templates/welcomehandler.html", "templates/base.html"))
 	templates["studentsignuphandler"] = template.Must(template.ParseFiles("templates/studentsignuphandler.html", "templates/base.html"))
 	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/yearofstudyform.html", "templates/navbar.html", "templates/base.html"))
-	templates["unitandlechandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/unitandlecturerform.html", "templates/navbar.html", "templates/base.html"))
+	templates["unitandlechandler"] = template.Must(template.ParseFiles("templates/unitandlecturerform.html", "templates/navbar.html", "templates/base.html"))
 
 	templates["questionpagehandler"] = template.Must(template.ParseFiles("templates/questionspage.html", "templates/base.html"))
 	templates["submitresponsehandler"] = template.Must(template.ParseFiles("templates/submitresponse.html", "templates/base.html"))
@@ -253,7 +254,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session.Save(r, w)
 
 	// Redirect to long url
-	uri := fmt.Sprintf("/dashboard/%v", student.ID.String())
+	// id := Between(student.ID.Hex(), "ObjectID(\"", "\")")
+	log.Println(student.ID.Hex())
+	uri := fmt.Sprintf("/dashboard/%v", student.ID.Hex())
 	http.Redirect(w, r, uri, http.StatusFound)
 }
 
@@ -347,7 +350,7 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Method", "POST")
 
 	//redirect to profile
-	uri := fmt.Sprintf("/unit-and-lecture/%s", userid.String())
+	uri := fmt.Sprintf("/unit-and-lecture/%s", userid.Hex())
 	http.Redirect(w, r, uri, http.StatusFound)
 }
 
@@ -447,7 +450,7 @@ func GetUnitAndLec(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Method", "POST")
 
 	//redirect to profile
-	uri := fmt.Sprintf("/questions/%s", userid.String())
+	uri := fmt.Sprintf("/questions/%s", userid.Hex())
 	http.Redirect(w, r, uri, http.StatusFound)
 
 }
@@ -571,7 +574,7 @@ func GetEvaluationAnswers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Method", "POST")
 
 	//redirect to profile
-	uri := fmt.Sprintf("/thank-you-response/%s", userid)
+	uri := fmt.Sprintf("/thank-you-response/%s", userid.Hex())
 	http.Redirect(w, r, uri, http.StatusFound)
 }
 
@@ -649,6 +652,24 @@ func Checkf(line string, err error) {
 	if err != nil {
 		log.Fatalln(line, " : ", err)
 	}
+}
+
+// check whats between
+func Between(value string, a string, b string) string {
+	// Get substring between two strings.
+	posFirst := strings.Index(value, a)
+	if posFirst == -1 {
+		return ""
+	}
+	posLast := strings.Index(value, b)
+	if posLast == -1 {
+		return ""
+	}
+	posFirstAdjusted := posFirst + len(a)
+	if posFirstAdjusted >= posLast {
+		return ""
+	}
+	return value[posFirstAdjusted:posLast]
 }
 
 // Main function
