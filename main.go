@@ -63,6 +63,7 @@ func init() {
 	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/base.html"))
 	templates["allunithandler"] = template.Must(template.ParseFiles("templates/allunithandler.html", "templates/base.html"))
 	templates["addunithandler"] = template.Must(template.ParseFiles("templates/addunithandler.html", "templates/base.html"))
+	templates["addcourseshandler"] = template.Must(template.ParseFiles("templates/addcourseshandler.html", "templates/base.html"))
 
 }
 
@@ -790,6 +791,91 @@ func AllCoursesHandler(w http.ResponseWriter, r *http.Request) {
 	RenderTemp(w, "allcourseshandler", "base", courses)
 }
 
+// add courses view
+func AddCoursesHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Add Courses Page Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "addcourseshandler", "base", nil)
+}
+
+// save new unit
+func SaveCoursesHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Save new unit Page Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// get values
+	if r.Method == "POST" {
+		// connect to database
+		client, err := CreateConnection()
+		Check(err)
+
+		// empty Course struct
+		var course models.Course
+
+		// set course id
+		course.CourseID = primitive.NewObjectID()
+
+		// select collection
+		inCourseCollection := client.Database(database).Collection(courseCollection)
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		fmt.Print("database connected\n")
+
+		r.ParseForm()
+		// decode incoming values
+		course.CourseName = r.FormValue("coursename")
+
+		// insert in collection
+		_, err = inCourseCollection.InsertOne(ctx, course)
+		Check(err)
+
+		// set headers
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Method", "POST")
+
+		//redirect to profile
+		uri := fmt.Sprintln("/dashboard/courses")
+		http.Redirect(w, r, uri, http.StatusFound)
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+
+	//redirect to profile
+	uri := fmt.Sprintln("/dashboard/courses")
+	http.Redirect(w, r, uri, http.StatusFound)
+
+}
+
 // show units
 func AllUnitsHandler(w http.ResponseWriter, r *http.Request) {
 	// instance of sessions
@@ -956,6 +1042,21 @@ func SaveNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+/* logout admin handler */
+func LogoutAdminHandler(w http.ResponseWriter, r *http.Request) {
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Revoke users authentication
+	session.Values["authenticated"] = false
+	session.Save(r, w)
+
+	// Redirect to long url
+	http.Redirect(w, r, "/admin", http.StatusFound)
+}
+
 /* function render template */
 //Render templates for the given name, template definition and data object
 func RenderTemp(w http.ResponseWriter, name string, template string, viewModel interface{}) {
@@ -1009,9 +1110,12 @@ func main() {
 	r.HandleFunc("/adminsignIn", AdminSignInHandler).Methods("POST", "OPTIONS")
 	r.HandleFunc("/dashboard", DashboardHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/dashboard/courses", AllCoursesHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/dashboard/courses/addCourse", AddCoursesHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/savenewcourse", SaveCoursesHandler).Methods("POST", "OPTIONS")
 	r.HandleFunc("/dashboard/courses/{courseid}", AllUnitsHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/dashboard/courses/{courseid}/addUnit", AddNewUnitHandler).Methods("POST", "OPTIONS")
 	r.HandleFunc("/savenewunit/{courseid}", SaveNewUnitHandler).Methods("POST", "OPTIONS")
+	r.HandleFunc("/adminLogout", LogoutAdminHandler).Methods("GET", "OPTIONS")
 
 	// route action links
 	r.HandleFunc("/register", PostSaveStudent).Methods("POST", "OPTIONS")

@@ -1,8 +1,20 @@
 {{ define "body"}}
 
-<h2>DashBoard</h2>
-<p>
-    <a href="/dashboard/courses">Go to Courses</a>
-</p>
+<!-- current location-->
+<h2>
+    <span>
+        <a href="/dashboard"  class="text-decoration-none">DashBoard</a>
+    </span>
+</h2>
+
+<!-- move to courses -->
+<h5>
+    <a href="/dashboard/courses"  class="text-decoration-none">&rarr;&nbsp;Go to Courses</a>
+</h5>
+
+<!-- log out -->
+<h5>
+    <a href="/adminLogout"  class="text-decoration-none">&larr;&nbsp;Log Out as Admin</a>
+</h5>
 
 {{end}}

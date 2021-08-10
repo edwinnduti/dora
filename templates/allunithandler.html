@@ -1,5 +1,12 @@
 {{ define "body"}}
 
+<h2>
+  <span>
+    <a href="/dashboard"  class="text-decoration-none">DashBoard</a>/
+    <a href="/dashboard/courses"  class="text-decoration-none">Courses</a>/
+    <a href="/dashboard/courses/{{.CourseID}}"  class="text-decoration-none">Units</a>
+  </span>
+</h2>
 
 <h2 class="text-center">{{ .CourseName }}</h2>
 <table class="table table-striped table-hover ">
