@@ -51,9 +51,10 @@ type Questions struct {
 
 // course details
 type Course struct {
-	CourseID   primitive.ObjectID `bson:"_id" json:"courseID"`
-	CourseName string             `json:"courseName"`
-	Units      []Unit             `json:"units"`
+	CourseID      primitive.ObjectID `bson:"_id" json:"courseID"`
+	CourseName    string             `json:"courseName"`
+	NumberOfUnits int                `json:"numberOfUnits"`
+	Units         []Unit             `json:"units"`
 }
 
 // unit info
@@ -88,4 +89,13 @@ type Config struct {
 // pass student with string id
 type IdDetail struct {
 	ID string `json:"ID"`
+}
+
+// Lecturer struct
+type Lecturer struct {
+	ID         primitive.ObjectID `bson:"_id" json:"Id"`
+	LecturerID string             `json:"lecturerID"`
+	FullName   string             `json:"lecturerFullname"`
+	Email      string             `json:"lecturerEmail"`
+	Password   string             `json:"lecturerPassword"`
 }

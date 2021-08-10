@@ -56,6 +56,14 @@ func init() {
 
 	templates["questionpagehandler"] = template.Must(template.ParseFiles("templates/questionspage.html", "templates/base.html"))
 	templates["submitresponsehandler"] = template.Must(template.ParseFiles("templates/submitresponse.html", "templates/base.html"))
+
+	// admin
+	templates["adminloginhandler"] = template.Must(template.ParseFiles("templates/adminloginhandler.html", "templates/base.html"))
+	templates["allcourseshandler"] = template.Must(template.ParseFiles("templates/allcourseshandler.html", "templates/base.html"))
+	templates["dashboardhandler"] = template.Must(template.ParseFiles("templates/dashboardhandler.html", "templates/base.html"))
+	templates["allunithandler"] = template.Must(template.ParseFiles("templates/allunithandler.html", "templates/base.html"))
+	templates["addunithandler"] = template.Must(template.ParseFiles("templates/addunithandler.html", "templates/base.html"))
+
 }
 
 // database and collection names are statically declared
@@ -64,6 +72,8 @@ const (
 	studentCollection   = "studentDetails"
 	detailsCollection   = "details"
 	questionsCollection = "questions"
+	adminCollection     = "adminsDetails"
+	courseCollection    = "courseAndUnit"
 )
 
 // create connection to mongodb
@@ -628,6 +638,325 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
+// admin view
+func AdminLoginHandler(w http.ResponseWriter, r *http.Request) {
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "adminloginhandler", "base", nil)
+}
+
+/* admin  sign-in handler */
+func AdminSignInHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		fmt.Fprintln(w, err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+
+	inCollection := client.Database(database).Collection(adminCollection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// create an empty student struct
+	var lecturer models.Lecturer
+
+	//  allow parsing form
+	r.ParseForm()
+
+	// decode incoming values
+	userid := r.FormValue("userid")
+	passwd := r.FormValue("password")
+
+	// find table document
+	err = inCollection.FindOne(ctx, bson.M{"userid": userid}).Decode(&lecturer)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			fmt.Println(fmt.Errorf("no documents error: %v", err))
+			w.WriteHeader(http.StatusOK)
+			//render template
+			RenderTemp(w, "adminloginhandler", "base", nil)
+
+		} else {
+			w.WriteHeader(http.StatusOK)
+			//render template
+			RenderTemp(w, "adminloginhandler", "base", nil)
+
+		}
+	}
+
+	// hash password
+	hash, err := HashPassword(passwd)
+	if err != nil {
+		fmt.Fprintln(w, err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// compare hashes
+	if ok := CheckPasswordHash(passwd, hash); !ok {
+		log.Fatalln("Wrong password!")
+		w.WriteHeader(http.StatusOK)
+		//render template
+		RenderTemp(w, "adminloginhandler", "base", nil)
+	}
+
+	// Set user as authenticated
+	session.Values["authenticated"] = true
+	session.Save(r, w)
+
+	// Redirect to long url
+	// id := Between(student.ID.Hex(), "ObjectID(\"", "\")")
+	log.Println(lecturer.ID.Hex())
+	uri := fmt.Sprintf("/dashboard/%s", lecturer.ID.Hex())
+	http.Redirect(w, r, uri, http.StatusFound)
+}
+
+// dashboard view
+func DashboardHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Dashboard Page Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "dashboardhandler", "base", nil)
+}
+
+// retrieve courses
+func AllCoursesHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "All courses Page Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// empty slice of Courses
+	var courses []models.Course
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+
+	inCourseCollection := client.Database(database).Collection(courseCollection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// get all documents
+	cursor, err := inCourseCollection.Find(ctx, bson.M{})
+	Check(err)
+
+	err = cursor.All(ctx, &courses)
+	Check(err)
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "allcourseshandler", "base", courses)
+}
+
+// show units
+func AllUnitsHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "All units Page Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// get id
+	vars := mux.Vars(r)
+	objId := vars["userid"]
+	courseid, err := primitive.ObjectIDFromHex(objId)
+	Check(err)
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+
+	// empty Course struct
+	var course models.Course
+
+	inCourseCollection := client.Database(database).Collection(courseCollection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// find table document
+	err = inCourseCollection.FindOne(ctx, bson.M{"courseID": courseid}).Decode(&course)
+	Check(err)
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "allunithandler", "base", course)
+}
+
+// add unit view
+func AddNewUnitHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Add unit Page Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// get id
+	vars := mux.Vars(r)
+	objId := vars["userid"]
+	courseid, err := primitive.ObjectIDFromHex(objId)
+	Check(err)
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+
+	// empty Course struct
+	var course models.Course
+
+	inCourseCollection := client.Database(database).Collection(courseCollection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// find table document
+	err = inCourseCollection.FindOne(ctx, bson.M{"courseID": courseid}).Decode(&course)
+	Check(err)
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+	w.WriteHeader(http.StatusOK)
+
+	//render template
+	RenderTemp(w, "addunithandler", "base", course)
+}
+
+// save new unit
+func SaveNewUnitHandler(w http.ResponseWriter, r *http.Request) {
+	// instance of sessions
+	session, err := store.Get(r, "cookie-name")
+	if err != nil {
+		log.Fatal("session error: ", err)
+	}
+
+	// Check if user is authenticated
+	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		fmt.Fprint(w, "Save new unit Page Forbidden!")
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
+	// get id
+	vars := mux.Vars(r)
+	objId := vars["userid"]
+	courseid, err := primitive.ObjectIDFromHex(objId)
+	Check(err)
+
+	// get values
+	if r.Method == "POST" {
+		// connect to database
+		client, err := CreateConnection()
+		Check(err)
+
+		// empty Course struct
+		var unit models.Unit
+
+		inCourseCollection := client.Database(database).Collection(courseCollection)
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		fmt.Print("database connected\n")
+
+		r.ParseForm()
+		// decode incoming values
+		unit.UnitCode = r.FormValue("unitcode")
+		unit.UnitName = r.FormValue("nameofunit")
+
+		// find table document
+		filter := bson.M{"courseID": courseid}
+
+		// update var
+		update := bson.D{
+			{Key: "$push", Value: bson.M{"units": unit}},
+		}
+
+		// update in collection
+		_, err = inCourseCollection.UpdateOne(ctx, filter, update)
+		Check(err)
+
+		// set headers
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Method", "POST")
+
+		//redirect to profile
+		uri := fmt.Sprintf("/dashboard/courses/%s", courseid.Hex())
+		http.Redirect(w, r, uri, http.StatusFound)
+	}
+
+	// set headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Method", "GET")
+
+	//redirect to profile
+	uri := fmt.Sprintf("/dashboard/courses/%s/addUnit", courseid.Hex())
+	http.Redirect(w, r, uri, http.StatusFound)
+
+}
+
 /* function render template */
 //Render templates for the given name, template definition and data object
 func RenderTemp(w http.ResponseWriter, name string, template string, viewModel interface{}) {
@@ -675,6 +1004,15 @@ func main() {
 	r.HandleFunc("/unit-and-lecture/{userid}", UnitAndLecturerHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/questions/{userid}", QuestionsHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/thank-you-response/{userid}", SubmitResponseHandler).Methods("GET", "OPTIONS")
+
+	// admin
+	r.HandleFunc("/admin", AdminLoginHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/adminsignIn", AdminSignInHandler).Methods("POST", "OPTIONS")
+	r.HandleFunc("/dashboard", DashboardHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/dashboard/courses", AllCoursesHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/dashboard/courses/{courseid}", AllUnitsHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/dashboard/courses/{courseid}/addUnit", AddNewUnitHandler).Methods("POST", "OPTIONS")
+	r.HandleFunc("/savenewunit/{courseid}", SaveNewUnitHandler).Methods("POST", "OPTIONS")
 
 	// route action links
 	r.HandleFunc("/register", PostSaveStudent).Methods("POST", "OPTIONS")

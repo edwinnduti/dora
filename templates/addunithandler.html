@@ -1,0 +1,35 @@
+{{define "body"}}
+
+<!-- Forms -->
+<div class="card-body">
+    <form class="form-horizontal" action="/savenewunit/{{.CourseID}}" method="POST">
+        <fieldset>
+          <legend>Add New Unit</legend>
+          <div class="form-group">
+            <label for="unitcode" class="control-label">Unit Code</label>
+            <div class="col-lg-10">
+              <input type="text" class="form-control" id="unitcode" name="unitcode" placeholder="BUSS 301">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="nameofunit" class="control-label">Name of Unit</label>
+            <div class="col-lg-10">
+              <input type="password" class="form-control" id="nameofunit" name="nameofunit" placeholder="Network Security">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <div class="row ml-auto">
+                    <a href="/dashboard/courses/{{$value.CourseID}}" class="text-decoration-none;">
+                        <input type="button" class="btn btn-primary d-none col-3" id="discardChanges" value="Discard Changes and go Back" />
+                    </a>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </fieldset>
+    </form>
+</div>
+
+{{end}}
