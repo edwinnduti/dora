@@ -851,7 +851,20 @@ func SaveCoursesHandler(w http.ResponseWriter, r *http.Request) {
 
 		r.ParseForm()
 		// decode incoming values
-		course.CourseName = r.FormValue("coursename")
+		courseName := r.FormValue("coursename")
+		if courseName == "" {
+			log.Fatal("NO COURSENAME ENTERED")
+			// set headers
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Method", "POST")
+
+			//redirect to profile
+			uri := fmt.Sprintln("/dashboard/courses")
+			http.Redirect(w, r, uri, http.StatusFound)
+		}
+
+		// push to struct
+		course.CourseName = courseName
 
 		// insert in collection
 		_, err = inCourseCollection.InsertOne(ctx, course)
