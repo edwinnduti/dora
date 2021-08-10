@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-        {{range $key,$value := .Units }}
+        {{range _,$value := .Units }}
       <tr>
         <td>&nbsp;</td>
         <td>{{$value.UnitCode}}</td>
@@ -24,7 +24,7 @@
 
 <div class="row ml-auto"> 
     <a href="/dashboard/courses/{{.CourseID}}/addUnit" class="text-decoration-none;">
-        <input type="button" class="btn btn-primary d-none col-3" id="addUnit" value="Add New Unit" />
+     <input type="button" class="btn btn-primary d-none col-3" id="addUnit" value="Add New Unit" />
     </a>
 </div>
 
