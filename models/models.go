@@ -99,3 +99,18 @@ type Lecturer struct {
 	Email      string             `json:"lecturerEmail"`
 	Password   string             `json:"lecturerPassword"`
 }
+
+// StringIdCourses
+type StringIdCourse struct {
+	CourseID      string      `json:"courseID"`
+	CourseName    string      `json:"courseName"`
+	NumberOfUnits int         `json:"numberOfUnits"`
+	Units         []StrIdUnit `json:"units"`
+}
+
+// unit info
+type StrIdUnit struct {
+	UnitID   string `json:"unitID"`
+	UnitName string `json:"unitname"`
+	UnitCode string `json:"unitcode"`
+}

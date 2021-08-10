@@ -22,15 +22,15 @@
       </tr>
     </thead>
     <tbody>
-        {{range $key,$value := . }}
+      {{range $key,$value := . }}
       <tr>
-        <a href="/dashboard/courses/{{$value.CourseID}}"  class="text-decoration-none">
-            <span class="text-white">
-                <td>&nbsp;</td>
-                <td>{{$value.CourseName}}</td>
-                <td>{{$value.NumberOfUnits}}</td>
-            </span>
-        </a>
+        <td>&nbsp;</td>
+        <td>
+          <a href="/dashboard/courses/{{$value.CourseID}}"  class="text-decoration-none">
+            <span class="text-white">{{$value.CourseName}}</span>
+          </a>
+        </td>
+        <td>{{$value.NumberOfUnits}}</td>
       </tr>
       {{end}}
       

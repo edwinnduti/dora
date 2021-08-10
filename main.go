@@ -782,13 +782,24 @@ func AllCoursesHandler(w http.ResponseWriter, r *http.Request) {
 	err = cursor.All(ctx, &courses)
 	Check(err)
 
+	var strIdCourses []models.StringIdCourse
+	var strIdCourse models.StringIdCourse
+
+	for _, course := range courses {
+		strIdCourse.CourseID = course.CourseID.Hex()
+		strIdCourse.CourseName = course.CourseName
+		strIdCourse.NumberOfUnits = len(course.Units)
+
+		strIdCourses = append(strIdCourses, strIdCourse)
+	}
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "allcourseshandler", "base", courses)
+	RenderTemp(w, "allcourseshandler", "base", strIdCourses)
 }
 
 // add courses view
@@ -927,13 +938,34 @@ func AllUnitsHandler(w http.ResponseWriter, r *http.Request) {
 	err = inCourseCollection.FindOne(ctx, bson.M{"courseID": courseid}).Decode(&course)
 	Check(err)
 
+	// empty string id course struct
+	var strIdCourse models.StringIdCourse
+	var strIdUnit models.StrIdUnit
+
+	// match data
+	strIdCourse.CourseID = course.CourseID.Hex()
+	strIdCourse.CourseName = course.CourseName
+
+	// range over units
+	for _, units := range course.Units {
+		strIdUnit.UnitID = units.UnitID.Hex()
+		strIdUnit.UnitCode = units.UnitCode
+		strIdUnit.UnitName = units.UnitName
+
+		// append unit to units
+		strIdCourse.Units = append(strIdCourse.Units, strIdUnit)
+	}
+
+	// number of units
+	strIdCourse.NumberOfUnits = len(strIdCourse.Units)
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "allunithandler", "base", course)
+	RenderTemp(w, "allunithandler", "base", strIdCourse)
 }
 
 // add unit view
