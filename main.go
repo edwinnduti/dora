@@ -716,10 +716,9 @@ func AdminSignInHandler(w http.ResponseWriter, r *http.Request) {
 	session.Values["authenticated"] = true
 	session.Save(r, w)
 
-	// Redirect to long url
-	// id := Between(student.ID.Hex(), "ObjectID(\"", "\")")
+	// redirect user
 	log.Println(lecturer.ID.Hex())
-	uri := fmt.Sprintf("/dashboard/%s", lecturer.ID.Hex())
+	uri := fmt.Sprintln("/dashboard")
 	http.Redirect(w, r, uri, http.StatusFound)
 }
 
