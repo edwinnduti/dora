@@ -917,7 +917,7 @@ func AllUnitsHandler(w http.ResponseWriter, r *http.Request) {
 
 	// get id
 	vars := mux.Vars(r)
-	objId := vars["userid"]
+	objId := vars["courseid"]
 	courseid, err := primitive.ObjectIDFromHex(objId)
 	Check(err)
 
@@ -985,7 +985,7 @@ func AddNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 
 	// get id
 	vars := mux.Vars(r)
-	objId := vars["userid"]
+	objId := vars["courseid"]
 	courseid, err := primitive.ObjectIDFromHex(objId)
 	Check(err)
 
@@ -1032,7 +1032,7 @@ func SaveNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 
 	// get id
 	vars := mux.Vars(r)
-	objId := vars["userid"]
+	objId := vars["courseid"]
 	courseid, err := primitive.ObjectIDFromHex(objId)
 	Check(err)
 
