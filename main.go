@@ -876,6 +876,11 @@ func SaveCoursesHandler(w http.ResponseWriter, r *http.Request) {
 
 		// push to struct
 		course.CourseName = courseName
+		course.NumberOfUnits = 0
+
+		var units []models.Unit
+
+		course.Units = units
 
 		// insert in collection
 		_, err = inCourseCollection.InsertOne(ctx, course)
