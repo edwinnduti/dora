@@ -935,7 +935,7 @@ func AllUnitsHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Print("database connected\n")
 
 	// find table document
-	err = inCourseCollection.FindOne(ctx, bson.M{"courseID": courseid}).Decode(&course)
+	err = inCourseCollection.FindOne(ctx, bson.M{"_id": courseid}).Decode(&course)
 	Check(err)
 
 	// empty string id course struct
@@ -1003,7 +1003,7 @@ func AddNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Print("database connected\n")
 
 	// find table document
-	err = inCourseCollection.FindOne(ctx, bson.M{"courseID": courseid}).Decode(&course)
+	err = inCourseCollection.FindOne(ctx, bson.M{"_id": courseid}).Decode(&course)
 	Check(err)
 
 	// set headers
@@ -1057,7 +1057,7 @@ func SaveNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 		unit.UnitName = r.FormValue("nameofunit")
 
 		// find table document
-		filter := bson.M{"courseID": courseid}
+		filter := bson.M{"_id": courseid}
 
 		// update var
 		update := bson.D{
