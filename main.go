@@ -1006,13 +1006,34 @@ func AddNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 	err = inCourseCollection.FindOne(ctx, bson.M{"_id": courseid}).Decode(&course)
 	Check(err)
 
+	// empty string id course struct
+	var strIdCourse models.StringIdCourse
+	var strIdUnit models.StrIdUnit
+
+	// match data
+	strIdCourse.CourseID = course.CourseID.Hex()
+	strIdCourse.CourseName = course.CourseName
+
+	// range over units
+	for _, units := range course.Units {
+		strIdUnit.UnitID = units.UnitID.Hex()
+		strIdUnit.UnitCode = units.UnitCode
+		strIdUnit.UnitName = units.UnitName
+
+		// append unit to units
+		strIdCourse.Units = append(strIdCourse.Units, strIdUnit)
+	}
+
+	// number of units
+	strIdCourse.NumberOfUnits = len(strIdCourse.Units)
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "addunithandler", "base", course)
+	RenderTemp(w, "addunithandler", "base", strIdCourse)
 }
 
 // save new unit
