@@ -862,8 +862,25 @@ func SaveCoursesHandler(w http.ResponseWriter, r *http.Request) {
 
 		r.ParseForm()
 		// decode incoming values
-		courseName := r.FormValue("coursename")
-		if courseName == "" {
+		course.CourseName = r.FormValue("coursename")
+		if course.CourseName == "" {
+			log.Fatal("NO COURSENAME ENTERED")
+			// set headers
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Method", "POST")
+
+			//redirect to profile
+			uri := fmt.Sprintln("/dashboard/courses")
+			http.Redirect(w, r, uri, http.StatusFound)
+		}
+
+		var unit models.Unit
+
+		unit.UnitID = primitive.NewObjectID()
+		unit.UnitName = r.FormValue("unitname")
+		unit.UnitCode = r.FormValue("unitcode")
+
+		if unit.UnitCode == "" || unit.UnitName == "" {
 			log.Fatal("NO COURSENAME ENTERED")
 			// set headers
 			w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -875,12 +892,9 @@ func SaveCoursesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// push to struct
-		course.CourseName = courseName
 		course.NumberOfUnits = 0
 
-		var units []models.Unit
-
-		course.Units = units
+		course.Units = append(course.Units, unit)
 
 		// insert in collection
 		_, err = inCourseCollection.InsertOne(ctx, course)
