@@ -8,6 +8,12 @@
   </span>
 </h2>
 
+<button class="btn btn-danger btn-block border border-secondary rounded">
+  <a href="/dashboard/courses/{{.CourseID}}/addUnit"  class="text-decoration-none">
+    <h5>&plus;&nbsp;Add New Unit</h5>
+  </a>
+</button>
+
 <h2 class="text-center">{{ .CourseName }}</h2>
 <table class="table table-striped table-hover ">
     <thead>
@@ -28,11 +34,5 @@
       
     </tbody>
 </table>
-
-<div class="row ml-auto"> 
-    <a href="/dashboard/courses/{{.CourseID}}/addUnit" class="text-decoration-none;">
-     <input type="button" class="btn btn-primary d-none col-3" id="addUnit" value="Add New Unit" />
-    </a>
-</div>
 
 {{end}}
