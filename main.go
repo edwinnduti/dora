@@ -1158,7 +1158,7 @@ func main() {
 	r.HandleFunc("/dashboard/courses/addCourse", AddCoursesHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/savenewcourse", SaveCoursesHandler).Methods("POST", "OPTIONS")
 	r.HandleFunc("/dashboard/courses/{courseid}", AllUnitsHandler).Methods("GET", "OPTIONS")
-	r.HandleFunc("/dashboard/courses/{courseid}/addUnit", AddNewUnitHandler).Methods("POST", "OPTIONS")
+	r.HandleFunc("/dashboard/courses/{courseid}/addUnit", AddNewUnitHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/savenewunit/{courseid}", SaveNewUnitHandler).Methods("POST", "OPTIONS")
 	r.HandleFunc("/adminLogout", LogoutAdminHandler).Methods("GET", "OPTIONS")
 
