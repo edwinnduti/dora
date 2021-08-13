@@ -372,9 +372,9 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 
 	// define update
 	update := bson.D{
-		{Key: "$set", Value: bson.M{"yearOfStudy": yearOfStudy}},
+		{Key: "$set", Value: bson.M{"yearofstudy": yearOfStudy}},
 		{Key: "$set", Value: bson.M{"course": course}},
-		{Key: "$set", Value: bson.M{"currentSemester": semester}},
+		{Key: "$set", Value: bson.M{"semester": semester}},
 	}
 	_, err = inCollection.UpdateOne(ctx, filter, update)
 	Check(err)

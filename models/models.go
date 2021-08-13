@@ -7,13 +7,13 @@ import (
 // student info
 type Student struct {
 	ID          primitive.ObjectID `bson:"_id" json:"studentID"`
-	AdmNo       string             `json:"admNo"`
-	FullName    string             `json:"studentFullname"`
-	Email       string             `json:"studentEmail"`
-	Password    string             `json:"studentPassword"`
-	YearOfStudy string             `json:"yearOfStudy"`
+	AdmNo       string             `json:"admno"`
+	FullName    string             `json:"fullname"`
+	Email       string             `json:"email"`
+	Password    string             `json:"password"`
+	YearOfStudy string             `json:"yearofstudy"`
 	Course      string             `json:"course"`
-	Semester    string             `json:"currentSemester"`
+	Semester    string             `json:"semester"`
 }
 
 type Details struct {
@@ -54,8 +54,8 @@ type Questions struct {
 // course details
 type Course struct {
 	CourseID      primitive.ObjectID `bson:"_id" json:"courseID"`
-	CourseName    string             `json:"courseName"`
-	NumberOfUnits int                `json:"numberOfUnits"`
+	CourseName    string             `json:"coursename"`
+	NumberOfUnits int                `json:"numberofunits"`
 	Units         []Unit             `json:"units"`
 }
 
@@ -95,23 +95,23 @@ type IdDetail struct {
 	Courses   []Course `json:"courses"`
 	Units     []Unit   `json:"units"`
 	Course    Course   `json:"course"`
-	DetailsID string   `json:"detailsID"`
+	DetailsID string   `json:"detailsid"`
 }
 
 // Lecturer struct
 type Lecturer struct {
 	ID         primitive.ObjectID `bson:"_id" json:"Id"`
-	LecturerID string             `json:"lecturerID"`
-	FullName   string             `json:"lecturerFullname"`
-	Email      string             `json:"lecturerEmail"`
-	Password   string             `json:"lecturerPassword"`
+	LecturerID string             `json:"lecturerid"`
+	FullName   string             `json:"lecturerfullname"`
+	Email      string             `json:"lectureremail"`
+	Password   string             `json:"lecturerpassword"`
 }
 
 // StringIdCourses
 type StringIdCourse struct {
 	CourseID      string      `json:"courseID"`
-	CourseName    string      `json:"courseName"`
-	NumberOfUnits int         `json:"numberOfUnits"`
+	CourseName    string      `json:"coursename"`
+	NumberOfUnits int         `json:"numberofunits"`
 	Units         []StrIdUnit `json:"units"`
 }
 
