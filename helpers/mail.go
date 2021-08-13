@@ -24,12 +24,12 @@ func SendMailTo(student *models.Student) error {
 		From_Name : SCHOOL_NAME,
 		Subject: "Hello!",
 	}
-	body := fmt.Sprintf("Dear %s,\nWe saw that you signed-in andwe would like to urge you to fill in the questions as soon as possible.This questions are important for the evaluation of all lecturer performance necessary for enhancing better study for all students in the campus.\nKindly fill the for by today!\nRegards,\n%s",message.To_Name,message.From_Name)
+	body := fmt.Sprintf("Dear %s,<br/>We saw that you signed-in andwe would like to urge you to fill in the questions as soon as possible.This questions are important for the evaluation of all lecturer performance necessary for enhancing better study for all students in the campus.<br/>Kindly fill the for by today!<br/>Regards,<br/>%s",message.To_Name,message.From_Name)
 
 
 	mime := fmt.Sprintln("MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n")
 
-	msg := []byte("From: "+message.From_Email+"\r\n"+"Subject:"+message.Subject+"\r\n"+mime+"<html><head><style>#rcorners {border-radius: 25px; background: #8AC007; padding: 20px; width: 90%; height: 100%;}</style></head><body id=\"rcorners\"><br><h3 align=\"center\">"+message.From_Name+"</h3><br/><h5>"+body+"</h5></body></html>")
+	msg := []byte("From: "+message.From_Email+"\r\n"+"Subject:"+message.Subject+"\r\n"+mime+"<html><head><style>#rcorners {border-radius: 25px; background: #8AC007; padding: 20px; width: 90%; height: 100%;}</style></head><body id=\"rcorners\"><br><h2 align=\"center\">"+message.From_Name+"</h2><br/><h3>"+body+"</h3></body></html>")
 
 	message.Body = msg
 
