@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	USERNAME = "nduti316@gmail.com"
-	PASSWORD = "tkqhbdrjjxhkrkyr"
-	SCHOOL_NAME = "DORA SCHOOL"
+	USERNAME = "tukscit@gmail.com"
+	PASSWORD = "tukit2017"
+	SCHOOL_NAME = "TECHNICAL UNIVERSITY OF KENYA"
 )
 
 func SendMailTo(student *models.Student) error {
