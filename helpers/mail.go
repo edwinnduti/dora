@@ -24,7 +24,7 @@ func SendMailTo(student *models.Student) error {
 		From_Name : SCHOOL_NAME,
 		Subject: "Hello!",
 	}
-	body := fmt.Sprintf("Dear %s,<br/>We saw that you signed-in andwe would like to urge you to fill in the questions as soon as possible.This questions are important for the evaluation of all lecturer performance necessary for enhancing better study for all students in the campus.<br/>Kindly fill the for by today!<br/>Regards,<br/>%s",message.To_Name,message.From_Name)
+	body := fmt.Sprintf("Dear %s,<br/><br/>We saw that you signed-up and we would like to urge you to fill in the questions as soon as possible.These questions are important for the evaluation of all lecturers performance, necessary for enhancing better study for all students in the campus.<br/>Kindly fill the form within 24hours!<br/><br/>Regards,<br/>%s.",message.To_Name,message.From_Name)
 
 
 	mime := fmt.Sprintln("MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n")
