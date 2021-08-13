@@ -29,7 +29,7 @@ func SendMailTo(student *models.Student) error {
 
 	mime := fmt.Sprintln("MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n")
 
-	msg := []byte("From: "+message.From_Email+"\r\n"+"Subject:"+message.Subject+"\r\n"+mime+"<html><head><style>#rcorners {border-radius: 25px; background: #8AC007; padding: 20px; width: 90%; height: 100%;}</style></head><body id=\"rcorners\"><br><pre>"+body+"</pre></body></html>")
+	msg := []byte("From: "+message.From_Email+"\r\n"+"Subject:"+message.Subject+"\r\n"+mime+"<html><head><style>#rcorners {border-radius: 25px; background: #8AC007; padding: 20px; width: 90%; height: 100%;}</style></head><body id=\"rcorners\"><br><h3 align=\"center\">"+message.From_Name+"</h3><br/><h5>"+body+"</h5></body></html>")
 
 	message.Body = msg
 
