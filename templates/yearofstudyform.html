@@ -40,10 +40,9 @@
                     <label for="course" class="control-label">Course</label>
                     <div class="col-lg-10">
                         <select class="form-control" id="course" name="course">
-                            <option>BIT</option>
-                            <option>BBIT</option>
-                            <option>BAC</option>
-                            <option>BSD</option>
+                            {{range $key,$value := .Course }}
+                            <option>{{$value.CourseName}}</option>
+                            {{end}}
                         </select>
                     </div>
                 </div>

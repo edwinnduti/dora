@@ -15,12 +15,13 @@
 </button>
 
 <h2 class="text-center">{{ .CourseName }}</h2>
-<table class="table table-striped table-hover ">
+<table class="table table-striped table-hover bg-light text-dark">
     <thead>
       <tr>
         <th>#</th>
         <th>Unit Code</th>
-        <th>Number of Units</th>
+        <th>Unit Name</th>
+        <th>Lecturer</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
         <td>&nbsp;</td>
         <td>{{$value.UnitCode}}</td>
         <td>{{$value.UnitName}}</td>
+        <td>{{$value.Lecturer}}</td>
       </tr>
       {{end}}
       

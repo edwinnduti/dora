@@ -1,5 +1,5 @@
 /*
-[*] Copyright © 2020
+[*] Copyright © 2021
 [*] Dev/Author ->  Edwin Nduti
 [*] Description:
 	The code stores names in a mongodb file.
@@ -18,6 +18,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/edwinnduti/dora/helpers"
 	"github.com/edwinnduti/dora/models"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -290,9 +291,30 @@ func YearofstudyhandlerHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	objId := vars["userid"]
 
+	// empty slice of Courses
+	var courses []models.Course
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+
+	inCourseCollection := client.Database(database).Collection(courseCollection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// get all documents
+	cursor, err := inCourseCollection.Find(ctx, bson.M{})
+	Check(err)
+
+	err = cursor.All(ctx, &courses)
+	Check(err)
+
 	// student struct with id and issue url id to student.ID
-	studentID := models.IdDetail{
-		ID: objId,
+	studentDetail := models.IdDetail{
+		ID:      objId,
+		Courses: courses,
 	}
 
 	// set headers
@@ -301,7 +323,7 @@ func YearofstudyhandlerHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "yearofstudyhandler", "base", studentID)
+	RenderTemp(w, "yearofstudyhandler", "base", studentDetail)
 }
 
 /* get year and course */
@@ -385,10 +407,44 @@ func UnitAndLecturerHandler(w http.ResponseWriter, r *http.Request) {
 	// get id
 	vars := mux.Vars(r)
 	objId := vars["userid"]
+	userid, err := primitive.ObjectIDFromHex(objId)
+	Check(err)
+
+	// empty slice of Courses
+	var course models.Course
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+	fmt.Print("database connected\n")
+
+	// select student collection
+	inStudentCollection := client.Database(database).Collection(studentCollection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	// create an empty student struct
+	var student models.Student
+
+	// find student table document
+	err = inStudentCollection.FindOne(ctx, bson.M{"_id": userid}).Decode(&student)
+	Check(err)
+
+	// get course selected in previous page
+	inCourseCollection := client.Database(database).Collection(courseCollection)
+	ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// find course table document
+	err = inCourseCollection.FindOne(ctx, bson.M{"courseName": student.Course}).Decode(&course)
+	Check(err)
 
 	// student struct with id and issue url id to student.ID
-	studentID := models.IdDetail{
-		ID: objId,
+	studentDetail := models.IdDetail{
+		ID:     objId,
+		Course: course,
 	}
 
 	// set headers
@@ -397,7 +453,7 @@ func UnitAndLecturerHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "unitandlechandler", "base", studentID)
+	RenderTemp(w, "unitandlechandler", "base", studentDetail)
 }
 
 /* get-unit-and-lec */
@@ -440,9 +496,11 @@ func GetUnitAndLec(w http.ResponseWriter, r *http.Request) {
 	var details models.Details
 
 	// decode incoming values
-	details.DetailsID = userid
+	details.DetailsID = primitive.NewObjectID()
+	details.Student = userid.Hex()
 	details.Unit = r.FormValue("unitOfStudy")
 	details.Lecturer = r.FormValue("lecturer")
+	details.Rating = 0
 
 	// insert detail info
 	result, err := inCollection.InsertOne(ctx, details)
@@ -462,7 +520,7 @@ func GetUnitAndLec(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Method", "POST")
 
 	//redirect to profile
-	uri := fmt.Sprintf("/questions/%s", userid.Hex())
+	uri := fmt.Sprintf("/questions/%s/%s", userid.Hex(), details.DetailsID.Hex())
 	http.Redirect(w, r, uri, http.StatusFound)
 
 }
@@ -486,10 +544,12 @@ func QuestionsHandler(w http.ResponseWriter, r *http.Request) {
 	// get id
 	vars := mux.Vars(r)
 	objId := vars["userid"]
+	detailsId := vars["detailsid"]
 
 	// student struct with id and issue url id to student.ID
 	studentID := models.IdDetail{
-		ID: objId,
+		ID:        objId,
+		DetailsID: detailsId,
 	}
 
 	// set headers
@@ -521,14 +581,21 @@ func GetEvaluationAnswers(w http.ResponseWriter, r *http.Request) {
 	// get id
 	vars := mux.Vars(r)
 	objId := vars["userid"]
+	detailsID := vars["detailsid"]
 	userid, err := primitive.ObjectIDFromHex(objId)
+	Check(err)
+	detailsId, err := primitive.ObjectIDFromHex(detailsID)
 	Check(err)
 
 	// connect to database
 	client, err := CreateConnection()
 	Check(err)
 
-	inCollection := client.Database(database).Collection(questionsCollection)
+	// access questions collection
+	inQuestionsCollection := client.Database(database).Collection(questionsCollection)
+
+	// access details collection
+	inDetailsCollection := client.Database(database).Collection(detailsCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -540,46 +607,99 @@ func GetEvaluationAnswers(w http.ResponseWriter, r *http.Request) {
 	// empty details struct
 	var questions models.Questions
 
+	// set empty slice
+	var box []int
+
 	// decode incoming values
 	questions.QuestionsID = userid
 	questions.ClarityOfCourseUnitObjective = r.FormValue("clarityOfCourseUnitObjective")
+	helpers.Add(&box, &questions.ClarityOfCourseUnitObjective)
 	questions.AchievementOfCourseUnitObjective = r.FormValue("achievementOfCourseUnitObjective")
-	questions.ValuableCourseOutline = r.FormValue("valuableCourseOutline")
-	questions.InterpretationOfConcepts = r.FormValue("interpretationOfConcepts")
-	questions.ExtentOfCoverage = r.FormValue("extentOfCoverage")
-	questions.ClarityOfPresentation = r.FormValue("clarityOfPresentation")
-	questions.SufficiencyOfHandouts = r.FormValue("sufficiencyOfHandouts")
-	questions.GuidanceOnUse = r.FormValue("guidanceOnUse")
-	questions.AdequancyOfReadings = r.FormValue("adequancyOfReadings")
-	questions.ExhibitsHighLevel = r.FormValue("exhibitsHighLevel")
-	questions.OrganizedNotes = r.FormValue("organizedNotes")
-	questions.RelevantAssignment = r.FormValue("relevantAssignment")
-	questions.MakesAssignments = r.FormValue("makesAssignments")
-	questions.GivesFeedback = r.FormValue("givesFeedback")
-	questions.AttendsToLessons = r.FormValue("attendsToLessons")
-	questions.KeepsTimetable = r.FormValue("keepsTimetable")
-	questions.Punctual = r.FormValue("punctual")
-	questions.TeachesFullSession = r.FormValue("teachesFullSession")
-	questions.UseOfClassTime = r.FormValue("useOfClassTime")
-	questions.PresentCourseConceptsInterestingly = r.FormValue("presentCourseConceptsInterestingly")
-	questions.PresentCourseConceptsClearly = r.FormValue("presentCourseConceptsClearly")
-	questions.FacilitatesClassParticipation = r.FormValue("facilitatesClassParticipation")
+	helpers.Add(&box, &questions.AchievementOfCourseUnitObjective)
 
-	// insert detail info
-	result, err := inCollection.InsertOne(ctx, questions)
+	questions.ValuableCourseOutline = r.FormValue("valuableCourseOutline")
+	helpers.Add(&box, &questions.ValuableCourseOutline)
+
+	questions.InterpretationOfConcepts = r.FormValue("interpretationOfConcepts")
+	helpers.Add(&box, &questions.InterpretationOfConcepts)
+
+	questions.ExtentOfCoverage = r.FormValue("extentOfCoverage")
+	helpers.Add(&box, &questions.ExtentOfCoverage)
+
+	questions.ClarityOfPresentation = r.FormValue("clarityOfPresentation")
+	helpers.Add(&box, &questions.ClarityOfPresentation)
+
+	questions.SufficiencyOfHandouts = r.FormValue("sufficiencyOfHandouts")
+	helpers.Add(&box, &questions.SufficiencyOfHandouts)
+
+	questions.GuidanceOnUse = r.FormValue("guidanceOnUse")
+	helpers.Add(&box, &questions.GuidanceOnUse)
+
+	questions.AdequancyOfReadings = r.FormValue("adequancyOfReadings")
+	helpers.Add(&box, &questions.AdequancyOfReadings)
+
+	questions.ExhibitsHighLevel = r.FormValue("exhibitsHighLevel")
+	helpers.Add(&box, &questions.ExhibitsHighLevel)
+
+	questions.OrganizedNotes = r.FormValue("organizedNotes")
+	helpers.Add(&box, &questions.OrganizedNotes)
+
+	questions.RelevantAssignment = r.FormValue("relevantAssignment")
+	helpers.Add(&box, &questions.RelevantAssignment)
+
+	questions.MakesAssignments = r.FormValue("makesAssignments")
+	helpers.Add(&box, &questions.MakesAssignments)
+
+	questions.GivesFeedback = r.FormValue("givesFeedback")
+	helpers.Add(&box, &questions.GivesFeedback)
+
+	questions.AttendsToLessons = r.FormValue("attendsToLessons")
+	helpers.Add(&box, &questions.AttendsToLessons)
+
+	questions.KeepsTimetable = r.FormValue("keepsTimetable")
+	helpers.Add(&box, &questions.KeepsTimetable)
+
+	questions.Punctual = r.FormValue("punctual")
+	helpers.Add(&box, &questions.Punctual)
+
+	questions.TeachesFullSession = r.FormValue("teachesFullSession")
+	helpers.Add(&box, &questions.TeachesFullSession)
+
+	questions.UseOfClassTime = r.FormValue("useOfClassTime")
+	helpers.Add(&box, &questions.UseOfClassTime)
+
+	questions.PresentCourseConceptsInterestingly = r.FormValue("presentCourseConceptsInterestingly")
+	helpers.Add(&box, &questions.PresentCourseConceptsInterestingly)
+
+	questions.PresentCourseConceptsClearly = r.FormValue("presentCourseConceptsClearly")
+	helpers.Add(&box, &questions.PresentCourseConceptsClearly)
+
+	questions.FacilitatesClassParticipation = r.FormValue("facilitatesClassParticipation")
+	helpers.Add(&box, &questions.FacilitatesClassParticipation)
+
+	// calculate summation and get percentage
+	var sum = 0
+	for _, num := range box {
+		sum = sum + num
+	}
+	percentageValue := (sum / 105) * 100
+
+	// find table document
+	filter := bson.M{"_id": detailsId}
+
+	// update var
+	update := bson.D{
+		{Key: "$set", Value: bson.M{"rating": percentageValue}},
+	}
+
+	// update in detail collection
+	_, err = inDetailsCollection.UpdateOne(ctx, filter, update)
+	Check(err)
+
+	// insert questions info
+	result, err := inQuestionsCollection.InsertOne(ctx, questions)
 	Check(err)
 	fmt.Println("added new object of Id ", result.InsertedID.(primitive.ObjectID))
-
-	// // find table document
-	// filter := bson.M{"_id": userid}
-
-	// // define update
-	// update := bson.D{
-	// 	{Key: "$set", Value: bson.M{"yearOfStudy": unitOfStudy}},
-	// 	{Key: "$set", Value: bson.M{"course": lecturer}},
-	// }
-	// _, err = inCollection.UpdateOne(ctx, filter, update)
-	// Check(err)
 
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -738,13 +858,34 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// empty slice of details
+	var details []models.Details
+
+	// connect to database
+	client, err := CreateConnection()
+	Check(err)
+
+	// access details collection
+	inDetailsCollection := client.Database(database).Collection(detailsCollection)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	fmt.Print("database connected\n")
+
+	// get all documents
+	cursor, err := inDetailsCollection.Find(ctx, bson.M{})
+	Check(err)
+
+	err = cursor.All(ctx, &details)
+	Check(err)
+
 	// set headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Method", "GET")
 	w.WriteHeader(http.StatusOK)
 
 	//render template
-	RenderTemp(w, "dashboardhandler", "base", nil)
+	RenderTemp(w, "dashboardhandler", "base", details)
 }
 
 // retrieve courses
@@ -878,6 +1019,7 @@ func SaveCoursesHandler(w http.ResponseWriter, r *http.Request) {
 
 		unit.UnitID = primitive.NewObjectID()
 		unit.UnitName = r.FormValue("unitname")
+		unit.Lecturer = r.FormValue("lecturer")
 		unit.UnitCode = r.FormValue("unitcode")
 
 		if unit.UnitCode == "" || unit.UnitName == "" {
@@ -964,12 +1106,14 @@ func AllUnitsHandler(w http.ResponseWriter, r *http.Request) {
 	// match data
 	strIdCourse.CourseID = course.CourseID.Hex()
 	strIdCourse.CourseName = course.CourseName
+	strIdCourse.NumberOfUnits = course.NumberOfUnits
 
 	// range over units
 	for _, units := range course.Units {
 		strIdUnit.UnitID = units.UnitID.Hex()
 		strIdUnit.UnitCode = units.UnitCode
 		strIdUnit.UnitName = units.UnitName
+		strIdUnit.Lecturer = units.Lecturer
 
 		// append unit to units
 		strIdCourse.Units = append(strIdCourse.Units, strIdUnit)
@@ -1032,12 +1176,14 @@ func AddNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 	// match data
 	strIdCourse.CourseID = course.CourseID.Hex()
 	strIdCourse.CourseName = course.CourseName
+	strIdCourse.NumberOfUnits = course.NumberOfUnits
 
 	// range over units
 	for _, units := range course.Units {
 		strIdUnit.UnitID = units.UnitID.Hex()
 		strIdUnit.UnitCode = units.UnitCode
 		strIdUnit.UnitName = units.UnitName
+		strIdUnit.Lecturer = units.Lecturer
 
 		// append unit to units
 		strIdCourse.Units = append(strIdCourse.Units, strIdUnit)
@@ -1095,6 +1241,7 @@ func SaveNewUnitHandler(w http.ResponseWriter, r *http.Request) {
 		// decode incoming values
 		unit.UnitCode = r.FormValue("unitcode")
 		unit.UnitName = r.FormValue("nameofunit")
+		unit.Lecturer = r.FormValue("lecturer")
 
 		// find table document
 		filter := bson.M{"_id": courseid}
@@ -1187,7 +1334,7 @@ func main() {
 	r.HandleFunc("/signUp", StudentSignUpHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/year-of-study/{userid}", YearofstudyhandlerHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/unit-and-lecture/{userid}", UnitAndLecturerHandler).Methods("GET", "OPTIONS")
-	r.HandleFunc("/questions/{userid}", QuestionsHandler).Methods("GET", "OPTIONS")
+	r.HandleFunc("/questions/{userid}/{detailsid}", QuestionsHandler).Methods("GET", "OPTIONS")
 	r.HandleFunc("/thank-you-response/{userid}", SubmitResponseHandler).Methods("GET", "OPTIONS")
 
 	// admin
@@ -1207,7 +1354,7 @@ func main() {
 	r.HandleFunc("/login", LoginHandler).Methods("POST", "OPTIONS")
 	r.HandleFunc("/get-year-and-course/{userid}", GetYearAndCourse).Methods("POST", "OPTIONS")
 	r.HandleFunc("/get-unit-and-lec/{userid}", GetUnitAndLec).Methods("POST", "OPTIONS")
-	r.HandleFunc("/get-evaluation-answers/{userid}", GetEvaluationAnswers).Methods("POST", "OPTIONS")
+	r.HandleFunc("/get-evaluation-answers/{userid}/{detailsid}", GetEvaluationAnswers).Methods("POST", "OPTIONS")
 	r.HandleFunc("/logout", LogoutHandler).Methods("GET", "OPTIONS")
 
 	// route assets e.g images, css, javascript

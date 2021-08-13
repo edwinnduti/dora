@@ -19,6 +19,31 @@
     </h5>
 </div>
 
+<table class="table table-striped table-hover bg-light text-dark">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Unit Name</th>
+        <th>Lecturer</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+        {{range $key,$value := . }}
+      <tr>
+        <td>&nbsp;</td>
+        <td>{{$value.UnitName}}</td>
+        <td>{{$value.Lecturer}}</td>
+        <td>{{$value.Rating}}</td>
+      </tr>
+      {{end}}
+      
+    </tbody>
+</table>
+
+{{end}}
+
+
 
 
 {{end}}

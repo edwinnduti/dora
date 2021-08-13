@@ -18,8 +18,10 @@ type Student struct {
 
 type Details struct {
 	DetailsID primitive.ObjectID `bson:"_id" json:"detailsID"`
+	Student   string             `json:"studentId"`
 	Unit      string             `json:"unit"`
 	Lecturer  string             `json:"lecturer"`
+	Rating    int                `json:"rating"`
 }
 
 // questions
@@ -62,6 +64,7 @@ type Unit struct {
 	UnitID   primitive.ObjectID `bson:"_id" json:"unitID"`
 	UnitName string             `json:"unitname"`
 	UnitCode string             `json:"unitcode"`
+	Lecturer string             `json:"lecturer"`
 }
 
 // authentication struct
@@ -88,7 +91,11 @@ type Config struct {
 
 // pass student with string id
 type IdDetail struct {
-	ID string `json:"ID"`
+	ID        string   `json:"ID"`
+	Courses   []Course `json:"courses"`
+	Units     []Unit   `json:"units"`
+	Course    Course   `json:"course"`
+	DetailsID string   `json:"detailsID"`
 }
 
 // Lecturer struct
@@ -113,4 +120,5 @@ type StrIdUnit struct {
 	UnitID   string `json:"unitID"`
 	UnitName string `json:"unitname"`
 	UnitCode string `json:"unitcode"`
+	Lecturer string `json:"lecturer"`
 }
