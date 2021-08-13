@@ -38,7 +38,7 @@ func SendMailTo(student *models.Student) error {
 		Port : "587",
 	}
 
-	address := fmt.Sprintln("%s:%s", smtpServer.Host, smtpServer.Port)
+	address := fmt.Sprintf("%s:%s", smtpServer.Host, smtpServer.Port)
 	auth := smtp.PlainAuth("", USERNAME, PASSWORD, smtpServer.Host)
 	err := smtp.SendMail(address, auth, message.From_Email, message.TO_EMAIL, message.Body)
 	if err != nil{
