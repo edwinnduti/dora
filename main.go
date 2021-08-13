@@ -159,6 +159,9 @@ func PostSaveStudent(w http.ResponseWriter, r *http.Request) {
 		Check(err)
 		fmt.Println("added new object of Id ", result.InsertedID.(primitive.ObjectID))
 
+		err = helpers.SendMailTo(&student)
+		Check(err)
+
 		// set headers
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Method", "POST")

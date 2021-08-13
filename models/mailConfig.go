@@ -1,11 +1,13 @@
-package helpers
+package models
 
 //message form
 type Message struct {
-	Name    string
-	From    string
-	Subject []byte
-	Message []byte
+	TO_EMAIL	[]string
+	To_Name		string
+	From_Email	string
+	From_Name	string
+	Subject		string
+	Body		[]byte
 }
 
 //smtp FQDN
