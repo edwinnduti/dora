@@ -19,7 +19,7 @@
 <div>
     <form class="form-horizontal" action="/get-unit-and-lec/{{.ID}}" method="POST">
         <fieldset>
-            <h4>STAGE 2 - Choose a Course Unit and the Lecturer For {{.CourseName}}</h4>
+            <h4>STAGE 2 - Choose a Course Unit and the Lecturer For {{.Course.CourseName}}</h4>
             <div>
                 
                 <!-- Select Unit -->
@@ -27,7 +27,7 @@
                     <label for="unitOfStudy" class="control-label">Unit Of Study</label>
                     <div class="col-lg-10">
                         <select class="form-control" id="unitOfStudy" name="unitOfStudy">
-                            {{range $key,$value := .Units }}
+                            {{range $key,$value := .Course.Units }}
                             <option>{{$value.UnitName}}</option>
                             {{end}}
                         </select>
@@ -39,7 +39,7 @@
                     <label for="lecturer" class="control-label">Lecturer</label>
                     <div class="col-lg-10">
                         <select class="form-control" id="lecturer" name="lecturer">
-                            {{range $key,$value := .Units }}
+                            {{range $key,$value := .Course.Units }}
                             <option>{{$value.Lecturer}}</option>
                             {{end}}
                         </select>

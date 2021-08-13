@@ -326,7 +326,7 @@ func YearofstudyhandlerHandler(w http.ResponseWriter, r *http.Request) {
 	RenderTemp(w, "yearofstudyhandler", "base", studentDetail)
 }
 
-/* get year and course */
+/* get-year-and-course */
 func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 	// instance of sessions
 	session, err := store.Get(r, "cookie-name")

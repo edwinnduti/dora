@@ -40,7 +40,7 @@
                     <label for="course" class="control-label">Course</label>
                     <div class="col-lg-10">
                         <select class="form-control" id="course" name="course">
-                            {{range $key,$value := .Course }}
+                            {{range $key,$value := .Courses }}
                             <option>{{$value.CourseName}}</option>
                             {{end}}
                         </select>
