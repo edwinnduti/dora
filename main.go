@@ -614,7 +614,8 @@ func GetEvaluationAnswers(w http.ResponseWriter, r *http.Request) {
 	var box []int
 
 	// decode incoming values
-	questions.QuestionsID = userid
+	questions.QuestionsID = primitive.NewObjectID()
+	questions.Userid = userid
 	questions.ClarityOfCourseUnitObjective = r.FormValue("clarityOfCourseUnitObjective")
 	helpers.Add(&box, &questions.ClarityOfCourseUnitObjective)
 	questions.AchievementOfCourseUnitObjective = r.FormValue("achievementOfCourseUnitObjective")
@@ -685,7 +686,7 @@ func GetEvaluationAnswers(w http.ResponseWriter, r *http.Request) {
 	for _, num := range box {
 		sum = sum + num
 	}
-	percentageValue := (sum / 105) * 100
+	percentageValue := (sum / 110) * 100
 
 	// find table document
 	filter := bson.M{"_id": detailsId}

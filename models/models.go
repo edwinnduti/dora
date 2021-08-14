@@ -27,6 +27,7 @@ type Details struct {
 // questions
 type Questions struct {
 	QuestionsID                        primitive.ObjectID `bson:"_id" json:"questionsID"`
+	Userid                             primitive.ObjectID `json:"userid"`
 	ClarityOfCourseUnitObjective       string             `json:"clarityOfCourseUnitObjective"`
 	AchievementOfCourseUnitObjective   string             `json:"achievementOfCourseUnitObjective"`
 	ValuableCourseOutline              string             `json:"valuableCourseOutline"`

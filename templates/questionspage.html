@@ -1,7 +1,7 @@
 {{ define "body" }}
 
 <div class="container-md bg-secondary">
-    <form class="form-horizontal" action="/get-evaluation-answers/{{.ID}}/{{.DetailsID}}" method="POST" >
+    <form class="form-horizontal" action="/get-evaluation-answers/{{.ID}}/{{.DetailsID}}" method="POST" role="form" data-toggle="validator">
         <fieldset>
             <!-- Course Unit Objectives -->
             <div>
@@ -13,27 +13,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="clarityOfCourseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="clarityOfCourseUnitObjective" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="clarityOfCourseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="clarityOfCourseUnitObjective" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="clarityOfCourseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="clarityOfCourseUnitObjective" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="clarityOfCourseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="clarityOfCourseUnitObjective" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="clarityOfCourseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="clarityOfCourseUnitObjective" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -47,27 +47,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="achievementOfCourseUnitObjective" value="Poor">Poor
+                                <input type="radio" id="poor" name="achievementOfCourseUnitObjective" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="achievementOfCourseUnitObjective" value="Fair">Fair
+                                <input type="radio" id="fair" name="achievementOfCourseUnitObjective" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="achievementOfCourseUnitObjective" value="Good">Good
+                                <input type="radio" id="good" name="achievementOfCourseUnitObjective" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="achievementOfCourseUnitObjective" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="achievementOfCourseUnitObjective" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="courseUnitObjective" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -80,27 +80,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="valuableCourseOutline" value="Poor">Poor
+                                <input type="radio" id="poor" name="valuableCourseOutline" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="valuableCourseOutline" value="Fair">Fair
+                                <input type="radio" id="fair" name="valuableCourseOutline" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="valuableCourseOutline" value="Good">Good
+                                <input type="radio" id="good" name="valuableCourseOutline" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="valuableCourseOutline" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="valuableCourseOutline" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="valuableCourseOutline" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="valuableCourseOutline" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -117,27 +117,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="interpretationOfConcepts" value="Poor">Poor
+                                <input type="radio" id="poor" name="interpretationOfConcepts" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="interpretationOfConcepts" value="Fair">Fair
+                                <input type="radio" id="fair" name="interpretationOfConcepts" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="interpretationOfConcepts" value="Good">Good
+                                <input type="radio" id="good" name="interpretationOfConcepts" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="interpretationOfConcepts" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="interpretationOfConcepts" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="interpretationOfConcepts" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="interpretationOfConcepts" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -150,27 +150,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="extentOfCoverage" value="Poor">Poor
+                                <input type="radio" id="poor" name="extentOfCoverage" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="extentOfCoverage" value="Fair">Fair
+                                <input type="radio" id="fair" name="extentOfCoverage" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="extentOfCoverage" value="Good">Good
+                                <input type="radio" id="good" name="extentOfCoverage" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="extentOfCoverage" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="extentOfCoverage" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="extentOfCoverage" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="extentOfCoverage" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -183,27 +183,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="clarityOfPresentation" value="Poor">Poor
+                                <input type="radio" id="poor" name="clarityOfPresentation" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="clarityOfPresentation" value="Fair">Fair
+                                <input type="radio" id="fair" name="clarityOfPresentation" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="clarityOfPresentation" value="Good">Good
+                                <input type="radio" id="good" name="clarityOfPresentation" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="clarityOfPresentation" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="clarityOfPresentation" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="clarityOfPresentation" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="clarityOfPresentation" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -220,27 +220,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="sufficiencyOfHandouts" value="Poor">Poor
+                                <input type="radio" id="poor" name="sufficiencyOfHandouts" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="sufficiencyOfHandouts" value="Fair">Fair
+                                <input type="radio" id="fair" name="sufficiencyOfHandouts" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="sufficiencyOfHandouts" value="Good">Good
+                                <input type="radio" id="good" name="sufficiencyOfHandouts" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="sufficiencyOfHandouts" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="sufficiencyOfHandouts" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="sufficiencyOfHandouts" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="sufficiencyOfHandouts" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -253,27 +253,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="guidanceOnUse" value="Poor">Poor
+                                <input type="radio" id="poor" name="guidanceOnUse" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="guidanceOnUse" value="Fair">Fair
+                                <input type="radio" id="fair" name="guidanceOnUse" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="guidanceOnUse" value="Good">Good
+                                <input type="radio" id="good" name="guidanceOnUse" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="guidanceOnUse" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="guidanceOnUse" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="guidanceOnUse" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="guidanceOnUse" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -286,27 +286,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="adequancyOfReadings" value="Poor">Poor
+                                <input type="radio" id="poor" name="adequancyOfReadings" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="adequancyOfReadings" value="Fair">Fair
+                                <input type="radio" id="fair" name="adequancyOfReadings" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="adequancyOfReadings" value="Good">Good
+                                <input type="radio" id="good" name="adequancyOfReadings" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="adequancyOfReadings" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="adequancyOfReadings" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="adequancyOfReadings" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="adequancyOfReadings" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -320,27 +320,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="exhibitsHighLevel" value="Poor">Poor
+                                <input type="radio" id="poor" name="exhibitsHighLevel" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="exhibitsHighLevel" value="Fair">Fair
+                                <input type="radio" id="fair" name="exhibitsHighLevel" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="exhibitsHighLevel" value="Good">Good
+                                <input type="radio" id="good" name="exhibitsHighLevel" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="exhibitsHighLevel" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="exhibitsHighLevel" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="exhibitsHighLevel" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="exhibitsHighLevel" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -353,27 +353,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="organizedNotes" value="Poor">Poor
+                                <input type="radio" id="poor" name="organizedNotes" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="organizedNotes" value="Fair">Fair
+                                <input type="radio" id="fair" name="organizedNotes" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="organizedNotes" value="Good">Good
+                                <input type="radio" id="good" name="organizedNotes" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="organizedNotes" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="organizedNotes" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="organizedNotes" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="organizedNotes" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -390,27 +390,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="relevantAssignment" value="Poor">Poor
+                                <input type="radio" id="poor" name="relevantAssignment" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="relevantAssignment" value="Fair">Fair
+                                <input type="radio" id="fair" name="relevantAssignment" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="relevantAssignment" value="Good">Good
+                                <input type="radio" id="good" name="relevantAssignment" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="relevantAssignment" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="relevantAssignment" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="relevantAssignment" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="relevantAssignment" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -424,27 +424,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="makesAssignments" value="Poor">Poor
+                                <input type="radio" id="poor" name="makesAssignments" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="makesAssignments" value="Fair">Fair
+                                <input type="radio" id="fair" name="makesAssignments" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="makesAssignments" value="Good">Good
+                                <input type="radio" id="good" name="makesAssignments" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="makesAssignments" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="makesAssignments" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="makesAssignments" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="makesAssignments" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -458,27 +458,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="givesFeedback" value="Poor">Poor
+                                <input type="radio" id="poor" name="givesFeedback" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="givesFeedback" value="Fair">Fair
+                                <input type="radio" id="fair" name="givesFeedback" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="givesFeedback" value="Good">Good
+                                <input type="radio" id="good" name="givesFeedback" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="givesFeedback" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="givesFeedback" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="givesFeedback" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="givesFeedback" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -495,27 +495,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="attendsToLessons" value="Poor">Poor
+                                <input type="radio" id="poor" name="attendsToLessons" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="attendsToLessons" value="Fair">Fair
+                                <input type="radio" id="fair" name="attendsToLessons" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="attendsToLessons" value="Good">Good
+                                <input type="radio" id="good" name="attendsToLessons" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="attendsToLessons" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="attendsToLessons" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="attendsToLessons" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="attendsToLessons" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -528,27 +528,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="keepsTimetable" value="Poor">Poor
+                                <input type="radio" id="poor" name="keepsTimetable" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="keepsTimetable" value="Fair">Fair
+                                <input type="radio" id="fair" name="keepsTimetable" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="keepsTimetable" value="Good">Good
+                                <input type="radio" id="good" name="keepsTimetable" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="keepsTimetable" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="keepsTimetable" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="keepsTimetable" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="keepsTimetable" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -561,27 +561,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="punctual" value="Poor">Poor
+                                <input type="radio" id="poor" name="punctual" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="punctual" value="Fair">Fair
+                                <input type="radio" id="fair" name="punctual" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="punctual" value="Good">Good
+                                <input type="radio" id="good" name="punctual" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="punctual" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="punctual" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="punctual" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="punctual" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -594,27 +594,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="teachesFullSession" value="Poor">Poor
+                                <input type="radio" id="poor" name="teachesFullSession" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="teachesFullSession" value="Fair">Fair
+                                <input type="radio" id="fair" name="teachesFullSession" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="teachesFullSession" value="Good">Good
+                                <input type="radio" id="good" name="teachesFullSession" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="teachesFullSession" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="teachesFullSession" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="teachesFullSession" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="teachesFullSession" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -627,27 +627,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="useOfClassTime" value="Poor">Poor
+                                <input type="radio" id="poor" name="useOfClassTime" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="useOfClassTime" value="Fair">Fair
+                                <input type="radio" id="fair" name="useOfClassTime" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="useOfClassTime" value="Good">Good
+                                <input type="radio" id="good" name="useOfClassTime" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="useOfClassTime" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="useOfClassTime" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="useOfClassTime" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="useOfClassTime" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -664,27 +664,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="presentCourseConceptsInterestingly" value="Poor">Poor
+                                <input type="radio" id="poor" name="presentCourseConceptsInterestingly" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="presentCourseConceptsInterestingly" value="Fair">Fair
+                                <input type="radio" id="fair" name="presentCourseConceptsInterestingly" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="presentCourseConceptsInterestingly" value="Good">Good
+                                <input type="radio" id="good" name="presentCourseConceptsInterestingly" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="presentCourseConceptsInterestingly" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="presentCourseConceptsInterestingly" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="presentCourseConceptsInterestingly" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="presentCourseConceptsInterestingly" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -697,27 +697,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="presentCourseConceptsClearly" value="Poor">Poor
+                                <input type="radio" id="poor" name="presentCourseConceptsClearly" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="presentCourseConceptsClearly" value="Fair">Fair
+                                <input type="radio" id="fair" name="presentCourseConceptsClearly" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="presentCourseConceptsClearly" value="Good">Good
+                                <input type="radio" id="good" name="presentCourseConceptsClearly" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="presentCourseConceptsClearly" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="presentCourseConceptsClearly" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="presentCourseConceptsClearly" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="presentCourseConceptsClearly" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
@@ -730,27 +730,27 @@
                     <div class="col-lg-10">
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="poor" name="facilitatesClassParticipation" value="Poor">Poor
+                                <input type="radio" id="poor" name="facilitatesClassParticipation" value="Poor" required>Poor
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="fair" name="facilitatesClassParticipation" value="Fair">Fair
+                                <input type="radio" id="fair" name="facilitatesClassParticipation" value="Fair" required>Fair
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="good" name="facilitatesClassParticipation" value="Good">Good
+                                <input type="radio" id="good" name="facilitatesClassParticipation" value="Good" required>Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="veryGood" name="facilitatesClassParticipation" value="Very Good">Very Good
+                                <input type="radio" id="veryGood" name="facilitatesClassParticipation" value="Very Good" required>Very Good
                             </label>
                         </div>
                         <div class="radio form-check form-check-inline">
                             <label>
-                                <input type="radio" id="excellent" name="facilitatesClassParticipation" value="Excellent">Excellent
+                                <input type="radio" id="excellent" name="facilitatesClassParticipation" value="Excellent" required>Excellent
                             </label>
                         </div>
                     </div>
