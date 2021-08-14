@@ -356,7 +356,7 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 	client, err := CreateConnection()
 	Check(err)
 
-	inCollection := client.Database(database).Collection(studentCollection)
+	inStudentCollection := client.Database(database).Collection(studentCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -379,7 +379,7 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 		{Key: "$set", Value: bson.M{"course": course}},
 		{Key: "$set", Value: bson.M{"semester": semester}},
 	}
-	_, err = inCollection.UpdateOne(ctx, filter, update)
+	_, err = inStudentCollection.UpdateOne(ctx, filter, update)
 	Check(err)
 
 	// set headers
@@ -391,7 +391,7 @@ func GetYearAndCourse(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, uri, http.StatusFound)
 }
 
-/* unitandlecturer view */
+/* unit-and-lecturer view */
 func UnitAndLecturerHandler(w http.ResponseWriter, r *http.Request) {
 
 	// instance of sessions
@@ -441,7 +441,7 @@ func UnitAndLecturerHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Print("database connected\n")
 
 	// find course table document
-	err = inCourseCollection.FindOne(ctx, bson.M{"courseName": student.Course}).Decode(&course)
+	err = inCourseCollection.FindOne(ctx, bson.M{"coursename": student.Course}).Decode(&course)
 	Check(err)
 
 	// student struct with id and issue url id to student.ID
