@@ -1,6 +1,7 @@
 package helpers
 
 func Add(box *[]int, choice *string) *[]int {
+
 	var POOR string = "Poor"
 	var FAIR string = "Fair"
 	var GOOD string = "Good"
