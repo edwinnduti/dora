@@ -10,7 +10,7 @@ import (
 
 var (
 	USERNAME    = "tukscit@gmail.com"
-	PASSWORD    = "tukit2017"
+	PASSWORD    = os.Getenv("EMAIL_PASSWORD")
 	SCHOOL_NAME = "TECHNICAL UNIVERSITY OF KENYA"
 )
 
